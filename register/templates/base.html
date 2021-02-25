@@ -1,0 +1,28 @@
+<!doctype html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Better Neptun</title>
+    </head>
+
+<body>
+{% if user.is_authenticated %}
+    ur logged in
+        {{ user }}
+
+        {{ user.id }}
+    <a href="/logout/?next=/login/">Logout here</a>
+    {% else %}
+    <a href="/login/?next=/admin/">Login here</a>
+
+{% endif %}
+
+{%  block content %}
+            replace me
+        {% endblock %}
+
+    </body>
+</html>

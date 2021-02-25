@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+<h1>REGISZTRÁLÁS!4!</h1>
+
+{% block content %}
+
+    <form method="POST", class="form-group">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-success">Regisztráció</button>
+    </form>
+
+{% endblock content %}
