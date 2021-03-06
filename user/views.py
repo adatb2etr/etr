@@ -5,9 +5,11 @@ from user.forms import FelhasznaloForm, EtrAdminForm
 from user.models import EtrAdmin, Oktato, Hallgato
 from user.forms import *
 from user.validators.validators import is_EtrAdmin, is_Hallgato, is_Oktato
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from django.http import HttpResponse
-
+import sys
 
 
 
@@ -72,6 +74,15 @@ def felhasznalok_update_view(request, UserAzonosito):
                                   szulido=form.data['szulido'],
                                   szemelyiszam=form.data['szemelyiszam'])
 
+            try:
+                userJelszo = make_password(form.data['jelszo'])
+                User.objects.filter(username=UserAzonosito).update(first_name=form.data['keresztnev'],
+                                        last_name=form.data['vezeteknev']
+                                        , email=form.data['email'], password=userJelszo)
+            except:
+                print("\n\nNem tudtam updateolni a Django felhasználót mert nem létezik!\n\n")
+                sys.exc_info()
+
             return redirect("../../../felhasznalok/")
         context = {
             'form': form
@@ -96,6 +107,12 @@ def felhasznalok_delete_view(request, UserAzonosito):
 
         if request.method == "POST":
             obj.delete()
+            try:
+                User.objects.get(username=UserAzonosito).delete()
+            except:
+                print("\n\nNem tudtam törölni a Django felhasználót mert nem létezik!\n\n")
+                sys.exc_info()
+
             return redirect("../../../felhasznalok/")
         context = {
             "obj": obj
