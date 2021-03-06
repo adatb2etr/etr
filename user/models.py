@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
+from django.urls import reverse
 
 class EtrAdmin(models.Model):
 
@@ -12,6 +13,9 @@ class EtrAdmin(models.Model):
 
     class Meta:
         db_table = "etradmin"  #melyik táblába pakolja
+
+    def get_absolute_url(self):
+        return reverse("etradmin-detail", kwargs={"etradmin_Azonosito": self.azonosito})
 
 class Oktato(models.Model):
 
@@ -27,6 +31,9 @@ class Oktato(models.Model):
     class Meta:
         db_table = "oktato"  #melyik táblába pakolja
 
+    def get_absolute_url(self):
+        return reverse("FelhasznaloView", kwargs={"UserAzonosito": self.azonosito})
+
 
 class Hallgato(models.Model):
 
@@ -41,3 +48,6 @@ class Hallgato(models.Model):
 
     class Meta:
         db_table = "hallgato"  #melyik táblába pakolja
+
+    def get_absolute_url(self):
+        return reverse("FelhasznaloView", kwargs={"UserAzonosito": self.azonosito})

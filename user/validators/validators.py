@@ -18,7 +18,7 @@ def is_Oktato(response):
 
 def is_Hallgato(response):
 
-    hallgato = EtrAdmin.objects.all().filter(azonosito=response.user)
+    hallgato = Hallgato.objects.all().filter(azonosito=response.user)
     if hallgato:
         return True
     else:

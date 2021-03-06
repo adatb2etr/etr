@@ -5,7 +5,9 @@ from django.contrib.auth.models import User
 import hashlib
 from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
+from user.validators.queries import getids
 from django.shortcuts import redirect
+import random, string
 
 # /registeradmin/
 def register(response):
@@ -59,28 +61,48 @@ def registerFelhasznalo(response):
                         hallgato = False
 
                     if oktato is True and hallgato is False:
-                        User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
+                        id = "TESZTADMIN"
+                        foglaltIDs = getids()
+
+                        while id in foglaltIDs or id == "TESZTADMIN":
+                            chars = string.ascii_uppercase + string.digits
+                            id = "".join(random.choice(chars) for i in range(6))
+
+                        User.objects.create(username=id, first_name=form.data['keresztnev'],
                                             last_name=form.data['vezeteknev']
                                             , email=form.data['email'], password=userJelszo)
 
                         print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
-                        Oktato.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
+                        Oktato.objects.create(azonosito=id, keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
                                             ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'], szulido=form.data['szulido'],
                                                 szemelyiszam=form.data['szemelyiszam'])
 
+                        print(f"\n\n\nAz oktató ID-ja: {id}\n\n\n")
+
                     elif hallgato is True and oktato is False:
-                        User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
+                        id = "TESZTADMIN"
+                        foglaltIDs=getids()
+
+                        while id in foglaltIDs or id == "TESZTADMIN":
+                            chars = string.ascii_uppercase + string.digits
+                            id = "".join(random.choice(chars) for i in range(6))
+
+
+                        User.objects.create(username=id, first_name=form.data['keresztnev'],
                                             last_name=form.data['vezeteknev']
                                             , email=form.data['email'], password=userJelszo)
 
                         print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
-                        Hallgato.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'],
+                        Hallgato.objects.create(azonosito=id, keresztnev=form.data['keresztnev'],
                                               vezeteknev=form.data['vezeteknev']
                                               , email=form.data['email'], jelszo=encryptedJelszo,
                                               telefonszam=form.data['telefonszam'], szulido=form.data['szulido'],
                                               szemelyiszam=form.data['szemelyiszam'])
+
+                        print(f"\n\n\nA hallgató ID-ja: {id}\n\n\n")
                 else:
                     print(f"\n\n\n\nHiba!\n\n\n\n")
+
         else:
             form = FelhasznaloForm()
         return render(response, "register/registerFelhasznalo.html", {"form": form})

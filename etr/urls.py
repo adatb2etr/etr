@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from register import views as v
-
+from user.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,12 @@ urlpatterns = [
     path("register/", v.registerFelhasznalo, name="registerFelhasznalo"),
     path("teszt/", v.sample_view, name="teszt"),
     path('', include("django.contrib.auth.urls")),  #login
-    path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='logout')
+    path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
+
+
+    path('felhasznalok/', felhasznalok_list_view, name="FelhasznalokList"),    #oktatok_list_view függvényt használja
+    path('felhasznalok/<str:UserAzonosito>/', felhasznalok_lookup_view, name="FelhasznaloView"),   #OktatokView  -  models.py-ban lévő reverse függénynél használjuk, ezzel kapjuk meg az oktato_azonosítót és ezzel hívja meg a oktato_lookup_view -t.
+    path('felhasznalok/<str:UserAzonosito>/update/',felhasznalok_update_view, name="FelhasznaloUpdateView"),
+    path('felhasznalok/<str:UserAzonosito>/delete/', felhasznalok_delete_view, name="FelhasznaloDeleteView"),
+    path('me/', sajat_detail_view, name="Me"),
 ]

@@ -11,9 +11,9 @@
 <body>
 {% if user.is_authenticated %}
     ur logged in
-        {{ user }}
+        <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
+        <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
 
-        {{ user.id }}
     <a href="/logout/?next=/login/">Logout here</a>
     {% else %}
     <a href="/login/?next=/admin/">Login here</a>

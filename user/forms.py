@@ -25,7 +25,6 @@ class EtrAdminForm(forms.ModelForm):
 
 class FelhasznaloForm(forms.ModelForm):
 
-    azonosito = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Azonosito"}))
     vezeteknev = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Vezeteknev"}))
     keresztnev = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Keresztnev"}))
     szemelyiszam = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Keresztnev"}))
@@ -39,7 +38,6 @@ class FelhasznaloForm(forms.ModelForm):
     class Meta:
         model = Oktato  # muszáj ide írni
         fields = [
-            'azonosito',
             'vezeteknev',
             'keresztnev',
             'szemelyiszam',

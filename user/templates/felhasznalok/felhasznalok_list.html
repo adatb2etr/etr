@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../register/"><h3>Új Felhasználó Felvétele</h3></a>
+    <table>
+        <tr>
+            <th>Azonosító</th>
+            <th>Vezetéknév</th>
+            <th>Keresztnév</th>
+            <th>Személyi szám</th>
+            <th>Születési Idő</th>
+            <th>Telefonszám</th>
+            <th>Email</th>
+            <th>Jelszó</th>
+
+        </tr>
+        {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.azonosito }}</a></td>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.vezeteknev }}</a></td>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.keresztnevev }}</a></td>
+                <td>{{ instance.szemelyiszam }} </td>
+                <td>{{ instance.szulido }} </td>
+                <td>{{ instance.telefonszam }}</td>
+                <td>{{ instance.email }}</td>
+                <td>{{ instance.jelszo }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    <table>
+        <tr>
+            <th>Azonosító</th>
+            <th>Vezetéknév</th>
+            <th>Keresztnév</th>
+            <th>Személyi szám</th>
+            <th>Születési Idő</th>
+            <th>Telefonszám</th>
+            <th>Email</th>
+            <th>Jelszó</th>
+
+        </tr>
+        {% for instance in object_list2 %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.azonosito }}</a></td>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.vezeteknev }}</a></td>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.keresztnevev }}</a></td>
+                <td>{{ instance.szemelyiszam }} </td>
+                <td>{{ instance.szulido }} </td>
+                <td>{{ instance.telefonszam }}</td>
+                <td>{{ instance.email }}</td>
+                <td>{{ instance.jelszo }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
