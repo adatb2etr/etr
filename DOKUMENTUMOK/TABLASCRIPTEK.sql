@@ -1,4 +1,8 @@
 select * from HELLOTEST;
+TRUNCATE TABLE etradmin;
+select * from etradmin;
+select * from oktato;
+select * from hallgato;
 
 
 CREATE TABLE etradmin(
