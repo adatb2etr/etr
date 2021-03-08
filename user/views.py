@@ -31,7 +31,6 @@ def felhasznalok_list_view(request):
 def felhasznalok_lookup_view(request, UserAzonosito):   # a UserAzonosító a  Models.py-ban megfelelő Modelből jön az urls.py megfelelő függvényén keresztül. path() -el kezdődik
 
     if is_EtrAdmin(request) or UserAzonosito == str(request.user):   # Ha a kérdező ADMIN VAGY SAJÁT akkor megnézi, hogy létezik-e oktató, ha nem akkor a hallgatót is, ha nem akkor pedig redirectel
-            print(f"\n\n\nsfsdafsadsadds\n\n\n")
             try:
                 obj =Oktato.objects.get(azonosito=UserAzonosito)
             except:
@@ -65,14 +64,22 @@ def felhasznalok_update_view(request, UserAzonosito):
                 except:
                     return redirect("../../..teszt")
 
+
+
         form = FelhasznaloForm(request.POST or None, instance=obj)
         if form.is_valid():
+            print("\n\n\nasdssasdadas\n\n\n")
             encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()
 
-            Oktato.objects.filter(azonosito=UserAzonosito).update(keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
-                                  ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'],
-                                  szulido=form.data['szulido'],
-                                  szemelyiszam=form.data['szemelyiszam'])
+            obj.keresztnev =form.data['keresztnev']
+            obj.vezeteknev=form.data['vezeteknev']
+            obj.email=form.data['email']
+            obj.jelszo=encryptedJelszo
+            obj.telefonszam=form.data['telefonszam']
+            obj.szulido=form.data['szulido']
+            obj.szemelyiszam=form.data['szemelyiszam']
+            obj.save()
+
 
             try:
                 userJelszo = make_password(form.data['jelszo'])

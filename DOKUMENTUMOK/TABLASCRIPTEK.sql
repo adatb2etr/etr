@@ -24,6 +24,8 @@ CREATE TABLE hallgato(
     email VARCHAR2(64) not null,
     jelszo VARCHAR2(64) not null,
     szulido DATE not null,
+    teljesitettkreditek INT default 0,
+    kepzes VARCHAR(64) not null,
     CONSTRAINT azonosito_pk PRIMARY KEY (azonosito)
 );
 
@@ -119,6 +121,7 @@ CREATE TABLE vizsgazik(
 CREATE TABLE kurzustfelvesz(
     hallgatoAzonosito VARCHAR2(6) not null,
     kurzusKod VARCHAR2(20) not null,
+    teljesitette BOOLEAN default NO,
     CONSTRAINT kurzusHallgatoAzonosito_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito),
     CONSTRAINT kurzusKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod)
 );

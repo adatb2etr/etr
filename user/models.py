@@ -45,6 +45,8 @@ class Hallgato(models.Model):
     email = models.CharField(max_length=64, null=False)
     jelszo = models.CharField(max_length=64, null=False)
     szulido = models.DateField(null=False)
+    teljesitettkreditek = models.IntegerField(default=0, null=False)
+    kepzes = models.CharField(max_length=64, null=False, default="Not_Defined")
 
     class Meta:
         db_table = "hallgato"  #melyik táblába pakolja
