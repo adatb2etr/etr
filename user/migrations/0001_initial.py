@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('keresztnev', models.CharField(max_length=64)),
                 ('email', models.CharField(max_length=64)),
                 ('jelszo', models.CharField(max_length=64)),
-                ('user', models.OneToOneField(on_delete=None, to='user.User')),
+                ('user', models.OneToOneField(on_delete=models.CASCADE, to='user.User')),
             ],
             options={
                 'db_table': 'etradmin',

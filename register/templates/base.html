@@ -3,26 +3,34 @@
 
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Better Neptun</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Better Neptun</title>
+        <link rel="stylesheet" href="{% static  'etr/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static  'etr/css/style.css' %}">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'etr/images/favicon.png' %}">
+
     </head>
 
-<body>
-{% if user.is_authenticated %}
-    ur logged in
-        <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
-        <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
+    <body>
+        <div class="logo"></div>
+        <div class="card login-card d-flex justify-content-center">
+            <div class="card-body">
+                {% if user.is_authenticated %}
+                    ur logged in
+                <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
+                <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
 
-    <a href="/logout/?next=/login/">Logout here</a>
-    {% else %}
-    <a href="/login/?next=/admin/">Login here</a>
+                <a href="/logout/?next=/login/" class="temp-link">Logout here</a>
+                {% else %}
+                <a href="/login/?next=/admin/" class="temp-link">Login here</a>
 
-{% endif %}
+                {% endif %}
 
-{%  block content %}
-            replace me
-        {% endblock %}
-
+                {%  block content %}
+                            replace me
+                        {% endblock %}
+            </div>
+        </div>
     </body>
 </html>

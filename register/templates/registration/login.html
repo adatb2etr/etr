@@ -4,11 +4,13 @@
 
 {% block content %}
 
-   <div class="login-section">
+   <div class="login-section card-footer">
         <form method="POST">
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit", class="btn btn-success">Bejelentkezés</button>
+            <div class="row jutify-content-center">
+                <button type="submit", class="btn btn-primary login-button">Bejelentkezés</button>
+            </div>
         </form>
     </div>
 
