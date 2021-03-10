@@ -18,6 +18,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from register import views as v
 from user.views import *
+from terem.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +34,10 @@ urlpatterns = [
     path('felhasznalok/<str:UserAzonosito>/update/',felhasznalok_update_view, name="FelhasznaloUpdateView"),
     path('felhasznalok/<str:UserAzonosito>/delete/', felhasznalok_delete_view, name="FelhasznaloDeleteView"),
     path('me/', sajat_detail_view, name="Me"),
+
+    path('termek/create/', terem_create_view, name ='terem-create'),
+    path('termek/<str:terem_cim>/', terem_lookup_view, name='terem-detail'),
+    path('termek/<str:terem_cim>/update/', terem_update_view, name='terem-update'),
+    path('termek/<str:terem_cim>/delete/', terem_delete_view, name='terem-delete'),
+    path('termek/', terem_list_view, name='Terem lista'),
 ]

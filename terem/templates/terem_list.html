@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../termek/create"><h3>Új terem felvétele</h3></a>
+    <table>
+        <tr>
+            <th>Cim</th>
+            <th>Kapacitás</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.cim }}</a></td>
+                <td>{{ instance.kapacitas }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

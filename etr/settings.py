@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'hellotest',
     'user',
     'register',
+    'terem',
 ]
 
 MIDDLEWARE = [
