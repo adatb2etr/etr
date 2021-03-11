@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user',
     'register',
     'terem',
+    'kurzus',
 ]
 
 MIDDLEWARE = [
@@ -138,4 +139,4 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/test/'
