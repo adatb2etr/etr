@@ -29,7 +29,7 @@ def kurzus_update_view(request, kurzus_kod):
         form = KurzusForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect("../../../termek/")
+            return redirect("../../../kurzusok/")
         context = {
             'obj' : form
         }

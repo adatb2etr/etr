@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="." method="POST">{% csrf_token %}
+    <h1>Szeretnéd törölni ezt az objektumot?</h1>
+    <p><input type="submit", value="Igen"/>   <a href="../../../idopontok/">Kilépés</a></p>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../idopontok/create"><h3>Új Időpont felvétele</h3></a>
+    <table>
+        <tr>
+           <th>Kezdete</th>
+            <th>Vége</th>
+            <th>Oktató</th>
+            <th>Kurzus Kódja</th>
+            <th>Kurzus Terme</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}">{{ instance.kezdete }}</a></td>
+            <td> {{ instance.vege }}  </td>
+                <td><a href="{{ instance.kurzusKod.oktatoAzonosito.get_absolute_url }}">{{ instance.kurzusKod.oktatoAzonosito.vezeteknev }}  {{ instance.kurzusKod.oktatoAzonosito.keresztnev }}</a></td>
+            <td> <a href="{{ instance.kurzusKod.kurzuskod.get_absolute_url }}">{{ instance.kurzusKod.kurzuskod }}</a> </td>
+            <td> <a href="{{ instance.kurzusKod.teremCim.get_absolute_url }}">{{ instance.kurzusKod.teremCim.cim }}</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

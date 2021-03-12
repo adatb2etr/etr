@@ -16,7 +16,7 @@
             <td>{{ obj.kurzuskod }}</td>
             <td> {{ obj.kurzusnev }}  </td>
             <td> {{ obj.kredit }}  </td>
-            <td> {{ obj.teremCim.cim }}  </td>
+            <td> <a href="{{ obj.teremCim.get_absolute_url }}">{{ obj.teremCim.cim }} </a>  </td>
             <td> <a href="{{ obj.oktatoAzonosito.get_absolute_url }}">{{ obj.oktatoAzonosito.azonosito }}</a>  </td>
         </tr>
     </table>

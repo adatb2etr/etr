@@ -15,7 +15,7 @@
                 <td><a href="{{ instance.get_absolute_url }}"> {{ instance.kurzuskod }}</a></td>
                 <td> {{ instance.kurzusnev }}  </td>
                 <td> {{ instance.kredit }}  </td>
-                <td> {{ instance.teremCim.cim }}  </td>
+                <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
                 <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
             </tr>
         {% endfor %}

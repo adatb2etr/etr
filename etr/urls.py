@@ -20,6 +20,7 @@ from register import views as v
 from user.views import *
 from terem.views import *
 from kurzus.views import *
+from idopont.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,5 +47,11 @@ urlpatterns = [
     path('kurzusok/<str:kurzus_kod>/', kurzus_lookup_view, name='kurzus-detail'),
     path('kurzusok/<str:kurzus_kod>/update/', kurzus_update_view, name='kurzus-update'),
     path('kurzusok/<str:kurzus_kod>/delete/', kurzus_delete_view, name='kurzus-delete'),
-    path('kurzusok/', kurzus_list_view, name='Terem lista'),
+    path('kurzusok/', kurzus_list_view, name='Kurzus lista'),
+
+    path('idopontok/create/', idopont_create_view, name='idopont-create'),
+    path('idopontok/<int:idopont_id>/', idopont_lookup_view, name='idopont-detail'),
+    path('idopontok/<int:idopont_id>/update/', idopont_update_view, name='idopont-update'),
+    path('idopontok/<int:idopont_id>/delete/', idopont_delete_view, name='idopont-delete'),
+    path('idopontok/', idopont_list_view, name='Idopont lista'),
 ]

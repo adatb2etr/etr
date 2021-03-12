@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'register',
     'terem',
     'kurzus',
+    'idopont',
 ]
 
 MIDDLEWARE = [
