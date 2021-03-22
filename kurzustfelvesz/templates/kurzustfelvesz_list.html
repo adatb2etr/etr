@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../kurzusokatfelvesz/create"><h3>Új kurzustfelvesz felvétele</h3></a>
+    <table>
+        <tr>
+            <th>ID</th>
+           <th>Hallgató Azonosító</th>
+            <th>Kurzus Kód</th>
+            <th>Kredit</th>
+            <th>Teljesítette</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+            <td> <a href="{{ instance.get_absolute_url }}">{{ instance.id }}</a></td>
+            <td> <a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito.azonosito }} </a></td>
+            <td> <a href="{{ instance.kurzusKod.get_absolute_url }}">{{ instance.kurzusKod.kurzuskod }}</a>  </td>
+            <td> {{ instance.kurzusKod.kredit }}</td>
+            <td> {{ instance.teljesitette }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../elofeltetelek/create"><h3>Új előfeltételek felvétele</h3></a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Tantárgy</th>
+            <th>Előfeltétel</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+             <td> <a href="{{ instance.get_absolute_url }}">{{ instance.id }}</a></td>
+            <td> <a href="{{ instance.kurzusKod.get_absolute_url }}">{{ instance.kurzusKod.kurzuskod }}</a></td>
+            <td> <a href="{{ instance.elofeltetelKod.get_absolute_url }}">{{ instance.elofeltetelKod.kurzuskod }}</a> </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -36,6 +36,7 @@ def idopont_update_view(request, idopont_id):
         return render(request, "idopont_creation.html", context)
 
 def idopont_lookup_view(request, idopont_id):
+    print(f"\n\n\n{idopont_id}\n\n\n\n")
     obj = get_object_or_404(Idopont, id=idopont_id)
 
     context = {

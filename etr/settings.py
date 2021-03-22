@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'register',
     'terem',
     'kurzus',
+    'elofeltetel',
     'idopont',
+    'kurzustfelvesz',
 ]
 
 MIDDLEWARE = [

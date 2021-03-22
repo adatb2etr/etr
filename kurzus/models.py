@@ -9,7 +9,7 @@ class Kurzus(models.Model):
     ferohely = models.IntegerField(default=999, null=False)
     kredit = models.IntegerField(default=1, null=False)
     teremCim = models.ForeignKey(Terem, null=False, on_delete=models.CASCADE, db_column="teremCim")
-    oktatoAzonosito = models.OneToOneField(Oktato, max_length=6, null=False, on_delete=models.CASCADE, db_column="oktatoAzonosito")
+    oktatoAzonosito = models.ForeignKey(Oktato, max_length=6, null=False, on_delete=models.CASCADE, db_column="oktatoAzonosito")
 
     class Meta:
         db_table = "kurzus"

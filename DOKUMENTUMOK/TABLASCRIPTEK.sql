@@ -3,7 +3,7 @@ TRUNCATE TABLE etradmin;
 select * from etradmin;
 select * from oktato;
 select * from hallgato;
-
+select * from elofeltetel;
 
 CREATE TABLE etradmin(
     azonosito VARCHAR2(32) not null,
@@ -91,7 +91,16 @@ CREATE TABLE kurzus(
     CONSTRAINT teremHely_fk FOREIGN KEY (teremCim) REFERENCES terem(cim)
 );
 
+CREATE TABLE elofeltetel(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    kurzusKod VARCHAR2(20) not null,
+    elofeltetelKod VARCHAR2(20) not null,
+    CONSTRAINT elofeltetelKurzuskod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod),
+    CONSTRAINT elofeltetelKurzuskod_fk2 FOREIGN KEY (elofeltetelKod) REFERENCES kurzus(kurzuskod)
+);
+
 CREATE TABLE idopont(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     kezdete timestamp not null,
     vege timestamp not null,
     kurzusKod VARCHAR(20) not null,
@@ -119,9 +128,10 @@ CREATE TABLE vizsgazik(
 );
 
 CREATE TABLE kurzustfelvesz(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     hallgatoAzonosito VARCHAR2(6) not null,
     kurzusKod VARCHAR2(20) not null,
-    teljesitette BOOLEAN default NO,
+    teljesitette NUMBER(1) DEFAULT 0,
     CONSTRAINT kurzusHallgatoAzonosito_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito),
     CONSTRAINT kurzusKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod)
 );
@@ -130,6 +140,7 @@ drop table kurzustfelvesz;
 drop table vizsgazik;
 drop table vizsga;
 drop table idopont;
+drop table elofeltetel;
 drop table kurzus;
 drop table terem;
 drop table osztondij;

@@ -110,19 +110,10 @@ def registerFelhasznalo(response):
         return redirect("../teszt/")
 
 
+from elofeltetel.models import Elofeltetel
+from kurzustfelvesz.models import Kurzustfelvesz
+
 def sample_view(response):
 
-
-    """
-     # /teszt/  -en kell használni
-    if is_EtrAdmin(response) is True:
-        #DO SOMETHING
-    elif is_Oktato(response) is True:
-        #DO ANOTHER THING
-    elif is_Hallgato(response) is True:
-        #DO ANOTHER THING
-    else:
-        #NINCS BEJELENTKEZVE
-    """
     print("gomb megnyomva")
     return render(response, "teszt.html")

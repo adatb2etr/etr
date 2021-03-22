@@ -21,6 +21,8 @@ from user.views import *
 from terem.views import *
 from kurzus.views import *
 from idopont.views import *
+from kurzustfelvesz.views import *
+from elofeltetel.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,9 +51,22 @@ urlpatterns = [
     path('kurzusok/<str:kurzus_kod>/delete/', kurzus_delete_view, name='kurzus-delete'),
     path('kurzusok/', kurzus_list_view, name='Kurzus lista'),
 
+    path('elofeltetelek/create/', elofeltetel_create_view, name ='elofeltetel-create'),
+    path('elofeltetelek/<str:elofeltetel_id>/', elofeltetel_lookup_view, name='elofeltetel-detail'),
+    path('elofeltetelek/<str:elofeltetel_id>/update/', elofeltetel_update_view, name='elofeltetel-update'),
+    path('elofeltetelek/<str:elofeltetel_id>/delete/', elofeltetel_delete_view, name='elofeltetel-delete'),
+    path('elofeltetelek/', elofeltetel_list_view, name='Elofeltetel lista'),
+
     path('idopontok/create/', idopont_create_view, name='idopont-create'),
     path('idopontok/<int:idopont_id>/', idopont_lookup_view, name='idopont-detail'),
     path('idopontok/<int:idopont_id>/update/', idopont_update_view, name='idopont-update'),
     path('idopontok/<int:idopont_id>/delete/', idopont_delete_view, name='idopont-delete'),
     path('idopontok/', idopont_list_view, name='Idopont lista'),
+
+    path('kurzusokatfelvesz/create/', kurzustfelvesz_create_view, name='kurzustfelvesz-create'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/', kurzustfelvesz_lookup_view, name='kurzustfelvesz-detail'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/update/', kurzustfelvesz_update_view, name='kurzustfelvesz-update'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/delete/', kurzustfelvesz_delete_view, name='kurzustfelvesz-delete'),
+    path('kurzusokatfelvesz/', kurzustfelvesz_list_view, name='Kurzustfelvesz lista'),
+
 ]

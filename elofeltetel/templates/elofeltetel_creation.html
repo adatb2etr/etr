@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="." method="POST"> {% csrf_token %}
+    {{ obj.as_ul }}
+    <a href="../">Vissza</a>
+    <input type="submit" value="Save"/>
+</form>
+{% endblock %}
