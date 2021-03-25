@@ -82,14 +82,16 @@ CREATE TABLE terem(
 CREATE TABLE kurzus(
     kurzuskod VARCHAR2(20) not null,
     kurzusnev VARCHAR2(64) not null,
-    kezdete timestamp not null,
-    vege timestamp not null,
     ferohely INT default 999 not null,
+    kredit INT default 1 not null,
     teremCim VARCHAR(64),
     oktatoAzonosito references oktato(azonosito),
     CONSTRAINT kurzuskod_pk PRIMARY KEY (kurzuskod),
     CONSTRAINT teremHely_fk FOREIGN KEY (teremCim) REFERENCES terem(cim)
 );
+
+
+
 
 CREATE TABLE elofeltetel(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
@@ -109,23 +111,28 @@ CREATE TABLE idopont(
 );
 
 CREATE TABLE vizsga(
+    vizsgaID NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     kurzusKod VARCHAR2(20) not null,
     idopont timestamp not null,
-    ferohely INT default 999 not null,
-    CONSTRAINT vizsgaIdopont_pk PRIMARY KEY (idopont),
+    ferohely INT DEFAULT 999 NOT NULL,
+    CONSTRAINT vizsgaID_pk PRIMARY KEY (vizsgaID),
     CONSTRAINT vizsgaKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod)
 );
 
+select * from vizsga;
+drop table vizsga;
+
 CREATE TABLE vizsgazik(
-    vizsgaKurzuskod VARCHAR(20) not null,
-    vizsgaIdopont timestamp not null,
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    vizsgaID NUMBER not null,
     hallgatoAzonosito VARCHAR(6) not null,
     kapottjegy INT not null check (kapottjegy between 1 and 5),
     vizsgaalkalom INT default 0 not null check (vizsgaalkalom between 0 and 3),
-    CONSTRAINT vizsgaIdopont_fk FOREIGN KEY (vizsgaIdopont) REFERENCES vizsga(idopont),
-    CONSTRAINT vizsgazikKurzuskod_fk FOREIGN KEY (vizsgaKurzuskod) REFERENCES kurzus(kurzuskod),
+    CONSTRAINT vizsgaID_fk FOREIGN KEY (vizsgaID) REFERENCES vizsga(vizsgaID),
     CONSTRAINT vizsgaHallgatoAzonostio_pk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito)
 );
+
+drop table vizsgazik;
 
 CREATE TABLE kurzustfelvesz(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
@@ -135,6 +142,9 @@ CREATE TABLE kurzustfelvesz(
     CONSTRAINT kurzusHallgatoAzonosito_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito),
     CONSTRAINT kurzusKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod)
 );
+
+select * from kurzus;
+
 
 drop table kurzustfelvesz;
 drop table vizsgazik;

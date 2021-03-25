@@ -7,6 +7,8 @@ from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
 from user.validators.queries import getids
 from django.shortcuts import redirect
+from tartozas.admin import Tartozas
+from osztondij.models import Osztondij
 import random, string
 
 # /registeradmin/
@@ -79,6 +81,7 @@ def registerFelhasznalo(response):
 
                         print(f"\n\n\nAz oktató ID-ja: {id}\n\n\n")
 
+
                     elif hallgato is True and oktato is False:
                         id = "TESZTADMIN"
                         foglaltIDs=getids()
@@ -100,6 +103,9 @@ def registerFelhasznalo(response):
                                               szemelyiszam=form.data['szemelyiszam'])
 
                         print(f"\n\n\nA hallgató ID-ja: {id}\n\n\n")
+
+                        Tartozas.objects.create(hallgatoAzonosito_id=id)
+                        Osztondij.objects.create(hallgatoAzonosito_id=id)
                 else:
                     print(f"\n\n\n\nHiba!\n\n\n\n")
 
@@ -109,9 +115,6 @@ def registerFelhasznalo(response):
     else:
         return redirect("../teszt/")
 
-
-from elofeltetel.models import Elofeltetel
-from kurzustfelvesz.models import Kurzustfelvesz
 
 def sample_view(response):
 

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br><br>
+    <table style="margin-left: 30px; size: 600px; font-size: 42px">
+        <tr>
+            <th>Vizsga Kódja</th>
+            <th>Kurzus Neve</th>
+            <th>Hallgató Azonosítója</th>
+            <th>Időpont</th>
+            <th>Kapott jegy</th>
+            <th>Vizsga alkalma</th>
+
+        </tr>
+
+        <tr>
+            <td>{{ obj.vizsgaID.vizsgaID }}</td>
+            <td>{{ obj.vizsgaID.kurzusKod }}</td>
+            <td> {{ obj.hallgatoAzonosito.azonosito }} </td>
+            <td> {{ obj.vizsgaIdopont.idopont }} </td>
+            <td> {{ obj.kapottjegy }} </td>
+            <td> {{ obj.vizsgaalkalom }} </td>
+        </tr>
+    </table>
+
+     <p style="font-size: 42px"> <a href="update/"> Szerkesztés</a>
+       <a href="delete/">Törlés</a> </p>
+{% endblock %}

@@ -31,6 +31,9 @@ class Oktato(models.Model):
     class Meta:
         db_table = "oktato"  #melyik táblába pakolja
 
+    def __str__(self):
+        return str(self.vezeteknev + " " + self.keresztnev + " (" + self.azonosito + ")")
+
     def get_absolute_url(self):
         return reverse("FelhasznaloView", kwargs={"UserAzonosito": self.azonosito})
 
@@ -50,6 +53,9 @@ class Hallgato(models.Model):
 
     class Meta:
         db_table = "hallgato"  #melyik táblába pakolja
+
+    def __str__(self):
+        return str(self.vezeteknev + " " + self.keresztnev + " (" + self.azonosito + ")")
 
     def get_absolute_url(self):
         return reverse("FelhasznaloView", kwargs={"UserAzonosito": self.azonosito})

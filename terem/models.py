@@ -9,5 +9,8 @@ class Terem(models.Model):
     class Meta:
         db_table = "terem"
 
+    def __str__(self):
+        return str(self.cim + "(" + str(self.kapacitas) + ")")
+
     def get_absolute_url(self):
         return reverse("terem-detail", kwargs={'terem_cim': self.cim})

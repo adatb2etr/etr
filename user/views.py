@@ -12,7 +12,6 @@ from django.http import HttpResponse
 import sys
 
 
-
 def felhasznalok_list_view(request):
 
     if is_EtrAdmin(request):

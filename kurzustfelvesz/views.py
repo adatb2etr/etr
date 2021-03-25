@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .forms import KurzustFelveszForm
 from .models import Kurzustfelvesz
+from kurzus.models import Kurzus
 from user.validators.validators import is_EtrAdmin
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -25,6 +26,16 @@ def get_teljesitett_elofeltetelek(kurzuskod, hallgatoAzonosito):
         return False
 
 
+def meghirdetve(kurzuskod):
+    try:
+        tantargy = Kurzus.objects.get(kurzuskod=kurzuskod)
+        if tantargy.oktatoAzonosito is None:
+            return False
+        else:
+            return True
+    except:
+        print("\n\n\n dassaddsa \n\n\n")
+        return False
 
 
 def kurzustfelvesz_create_view(request):
@@ -37,7 +48,9 @@ def kurzustfelvesz_create_view(request):
                 felveszKkod = form.data['kurzusKod']
                 hallgAzonosito = form.data['hallgatoAzonosito']
 
-                if get_teljesitett_elofeltetelek(felveszKkod, hallgAzonosito) is True:
+
+                if meghirdetve(felveszKkod) is True and get_teljesitett_elofeltetelek(felveszKkod, hallgAzonosito):
+
                     form.save()
                     form = KurzustFelveszForm()
 

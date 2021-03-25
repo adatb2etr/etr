@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../vizsgazik/create"><h3>Új vizsgazik felvétele</h3></a>
+    <table>
+        <tr>
+            <th>Vizsgazik Kódja</th>
+            <th>Vizsga Kódja</th>
+            <th>Kurzus Neve</th>
+            <th>Hallgató Azonosítója</th>
+            <th>Időpont</th>
+            <th>Kapott jegy</th>
+            <th>Vizsga alkalma</th>
+
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}">{{ instance.id }}</a></td>
+                <td><a href="{{ instance.vizsgaID.get_absolute_url }}">{{ instance.vizsgaID.vizsgaID }}</a></td>
+                <td><a href="{{ instance.vizsgaID.kurzusKod.get_absolute_url }}">{{ instance.vizsgaID.kurzusKod }}</a></td>
+                <td><a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito.azonosito }}</a></td>
+                <td> <a href="{{ instance.get_absolute_url }}">{{ instance.v }}</a> </td>
+                <td>{{ instance.kapottjegy }}</td>
+                <td> {{ instance.vizsgaalkalom }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -23,6 +23,10 @@ from kurzus.views import *
 from idopont.views import *
 from kurzustfelvesz.views import *
 from elofeltetel.views import *
+from tartozas.views import *
+from osztondij.views import *
+from vizsga.views import *
+from vizsgazik.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -68,5 +72,29 @@ urlpatterns = [
     path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/update/', kurzustfelvesz_update_view, name='kurzustfelvesz-update'),
     path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/delete/', kurzustfelvesz_delete_view, name='kurzustfelvesz-delete'),
     path('kurzusokatfelvesz/', kurzustfelvesz_list_view, name='Kurzustfelvesz lista'),
+
+    path('tartozasok/create/', tartozas_create_view, name='tartozas-create'),
+    path('tartozasok/<str:hallgatoAzonosito>/', tartzoas_lookup_view, name='tartozas-detail'),
+    path('tartozasok/<str:hallgatoAzonosito>/update/', tartozas_update_view, name='tartozas-update'),
+    path('tartozasok/<str:hallgatoAzonosito>/delete/', tartozas_delete_view, name='tartozas-delete'),
+    path('tartozasok/', tartozas_list_view, name='Tartozas lista'),
+
+    path('osztondijjak/create/', osztondij_create_view, name='osztondij-create'),
+    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/', osztondij_lookup_view, name='osztondij-detail'),
+    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/update/', osztondij_update_view, name='osztondij-update'),
+    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/delete/', osztondij_delete_view, name='osztondij-delete'),
+    path('osztondijjak/', osztondij_list_view, name='Osztondij lista'),
+
+    path('vizsgak/create/', vizsga_create_view, name='vizsga-create'),
+    path('vizsgak/<int:vizsgaID>/', vizsga_lookup_view, name='vizsga-detail'),
+    path('vizsgak/<int:vizsgaID>/update/', vizsga_update_view, name='vizsga-update'),
+    path('vizsgak/<int:vizsgaID>/delete/', vizsga_delete_view, name='vizsga-delete'),
+    path('vizsgak/', vizsga_list_view, name='Vizsga lista'),
+
+    path('vizsgazik/create/', vizsgazik_create_view, name='vizsgazik-create'),
+    path('vizsgazik/<int:vizsgazikID>/', vizsgazik_lookup_view, name='vizsgazik-detail'),
+    path('vizsgazik/<int:vizsgazikID>/update/', vizsgazik_update_view, name='vizsgazik-update'),
+    path('vizsgazik/<int:vizsgazikID>/delete/', vizsgazik_delete_view, name='vizsgazik-delete'),
+    path('vizsgazik/', vizsgazik_list_view, name='Vizsgazik lista'),
 
 ]

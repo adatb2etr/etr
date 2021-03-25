@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'elofeltetel',
     'idopont',
     'kurzustfelvesz',
+    'tartozas',
+    'osztondij',
+    'vizsga',
+    'vizsgazik',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../osztondijjak/create"><h3>Új Ösztöndíj felvétele</h3></a>
+    <table>
+        <tr>
+            <th>Hallgató Azonosítója</th>
+            <th>Hallgató Neve</th>
+            <th>Ösztöndíj Összege</th>
+        </tr>
+
+    {% for instance in object_list %}
+            <tr>
+            <td><a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito.azonosito }}</a></td>
+            <td>{{ instance.hallgatoAzonosito.vezeteknev }} {{ instance.hallgatoAzonosito.keresztnev }}</td>
+            <td> <a href ="{{ instance.get_absolute_url }}">{{ instance.osztondijosszeg }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
