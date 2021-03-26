@@ -29,6 +29,7 @@ CREATE TABLE hallgato(
     CONSTRAINT azonosito_pk PRIMARY KEY (azonosito)
 );
 
+
 CREATE TABLE oktato(
     azonosito VARCHAR2(6) not null,
     vezeteknev VARCHAR2(64) not null,
@@ -41,24 +42,6 @@ CREATE TABLE oktato(
     CONSTRAINT oktatoazonosito_pk PRIMARY KEY (azonosito)
 );
 
-
-CREATE TABLE kezelhallgatot(
-    adminAzonosito VARCHAR2(32) not null,
-    hallgatoAzonosito VARCHAR2(6) not null,
-    folyamatleiras VARCHAR2(4000) not null,
-    datum TIMESTAMP not null,
-    CONSTRAINT adminAzonositoHallgato_pk FOREIGN KEY (adminAzonosito) REFERENCES etradmin(azonosito),
-    CONSTRAINT hallgatoktatoAzonosito_pk FOREIGN KEY (hallgatoAzonosito) REFERENCES oktato(azonosito)
-);
-
-CREATE TABLE kezeloktatot(
-    adminAzonosito VARCHAR2(32) not null,
-    oktatoAzonosito VARCHAR2(6) not null,
-    folyamatleiras VARCHAR2(4000) not null,
-    datum TIMESTAMP not null,
-    CONSTRAINT adminAzonositoOktato_pk FOREIGN KEY (adminAzonosito) REFERENCES etradmin(azonosito),
-    CONSTRAINT kezeloktatoAzonosito_pk FOREIGN KEY (oktatoAzonosito) REFERENCES oktato(azonosito)
-);
 
 CREATE TABLE tartozasok(
     hallgatoAzonosito VARCHAR2(6),
@@ -144,8 +127,7 @@ CREATE TABLE kurzustfelvesz(
 );
 
 select * from kurzus;
-
-
+select * from hallgato;
 drop table kurzustfelvesz;
 drop table vizsgazik;
 drop table vizsga;
@@ -160,3 +142,4 @@ drop table kezelhallgatot;
 drop table hallgato;
 drop table oktato;
 drop table etradmin;
+
