@@ -129,16 +129,19 @@ def felhasznalok_delete_view(request, UserAzonosito):
 
 def sajat_detail_view(request):
 
-    if is_EtrAdmin(request):
+    role = getRole(request.user)
+
+    if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
-    elif is_Oktato(request):
+    elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
-    elif is_Hallgato(request):
+    elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
     else:
         return redirect("../teszt/")
 
     context = {
-        "obj": user
+        "obj": user,
+        "role" : role
     }
     return render(request, "felhasznalok/sajat_detail.html", context)

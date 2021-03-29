@@ -48,7 +48,6 @@ def kurzustfelvesz_create_view(request):
                 felveszKkod = form.data['kurzusKod']
                 hallgAzonosito = form.data['hallgatoAzonosito']
 
-
                 if meghirdetve(felveszKkod) is True and get_teljesitett_elofeltetelek(felveszKkod, hallgAzonosito):
 
                     form.save()

@@ -54,7 +54,7 @@ def getRole(id):
 
     try:
         EtrAdmin.objects.get(azonosito=id)
-        return "hallgato"
+        return "admin"
     except:
         try:
             Oktato.objects.get(azonosito=id)
@@ -62,7 +62,7 @@ def getRole(id):
         except:
             try:
                 Hallgato.objects.get(azonosito=id)
-                return ("etradmin")
+                return ("hallgato")
             except:
                 return None
 

@@ -26,6 +26,10 @@
         </tr>
     </table>
 
+    {% if  role  == "admin" %}
+        ADMIIIIIN
+    {% endif %}
+    
      <p style="font-size: 42px"> <a href="../felhasznalok/{{ obj.azonosito }}/update/"> Szerkesztés</a>
        <a href="../felhasznalok/{{ obj.azonosito }}/delete/">Törlés - CSAK ADMINOKNAK, MAJD VKI A FRONTENDEN ELTÜNTETI LOL</a> </p>
 {% endblock %}

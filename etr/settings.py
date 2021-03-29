@@ -146,4 +146,4 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/test/'
+LOGIN_REDIRECT_URL = '/teszt/'
