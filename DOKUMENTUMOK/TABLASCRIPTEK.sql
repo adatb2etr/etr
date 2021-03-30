@@ -5,6 +5,8 @@ select * from oktato;
 select * from hallgato;
 select * from elofeltetel;
 
+select * from auth_user;
+
 CREATE TABLE etradmin(
     azonosito VARCHAR2(32) not null,
     vezeteknev VARCHAR2(64) not null,
@@ -13,7 +15,7 @@ CREATE TABLE etradmin(
     email VARCHAR2(64) not null,
     jelszo VARCHAR2(64) not null,
     CONSTRAINT azonositoAdmin_pk PRIMARY KEY (azonosito)
-)
+);
 
 CREATE TABLE hallgato(
     azonosito VARCHAR2(6) not null,
