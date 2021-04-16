@@ -4,12 +4,31 @@
 
 {% block content %}
 
-   <div class="login-section card-footer">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <div class="row jutify-content-center">
+    <div class="login-section card-footer">
+        <form method="POST", class="form-group">
+        	<div class="row jutify-content-center" id="login-card">
+	            <h1 class="title">Bejelentkezés</h1>
+	            {% csrf_token %}
+	            <!--{{ form|crispy }} -->
+                <div class="form-group">
+                    <label for="neptunkod">Neptun kód: </label>
+                    <input id="neptunkod" type="text" class="form-control" name="neptunkod" maxlength="30" required>
+                </div>
+                <div class="form-group">
+                    <label for="jelszo">Jelszó: </label>
+                    <input id="jelszo" type="password" class="form-control" name="jelszo" maxlength="15" required>
+                </div>
                 <button type="submit", class="btn btn-primary login-button">Bejelentkezés</button>
+                {% if user.is_authenticated %}
+                    ur logged in
+                <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
+                <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
+
+                <a href="/logout/?next=/login/" class="temp-link text-muted">Logout here</a>
+                {% else %}
+                <a href="/login/?next=/admin/" class="temp-link text-muted">Login here</a>
+
+                {% endif %}
             </div>
         </form>
     </div>

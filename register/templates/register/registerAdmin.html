@@ -3,11 +3,52 @@
 <h1>REGISZTRÁLÁS!4!</h1>
 
 {% block content %}
-
-    <form method="POST", class="form-group">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="btn btn-success">Regisztráció</button>
-    </form>
+    <div class="login-section card-footer">
+        <form method="POST", class="form-group">
+            <h1 class="title">Admin regisztráció</h1>
+            {% csrf_token %}
+            <div class="row jutify-content-center" id="login-card">
+                <form>
+                    <div class="form-group">
+                        <label for="vezeteknev">Vezetéknév: </label>
+                        <input id="vezeteknev" type="text" class="form-control" name="vezeteknev" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="keresztnev">Keresztnév: </label>
+                        <input id="keresztnev" type="text" class="form-control" name="keresztnev" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail cím: </label>
+                        <input id="email" type="email" class="form-control" name="email" maxlength="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefonszam">Telefonszám: </label>
+                        <input id="telefonszam" type="phone" class="form-control" name="telefonszam" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jelszo">Jelszó: </label>
+                        <input id="jelszo" type="password" class="form-control" name="jelszo" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jelszo2">Jelszó megerősítése: </label>
+                        <input id="jelszo2" type="password" class="form-control" name="jelszo2" maxlength="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="szulido">Születési dátum: </label>
+                        <input id="szulido" type="date" class="form-control" name="szulido">
+                    </div>
+                </form>
+                <button type="submit", class="btn btn-primary login-button">Regisztráció</button>
+                {% if user.is_authenticated %}
+                    ur logged in
+                <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
+                <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
+                <a href="/logout/?next=/login/" class="temp-link text-muted">Logout here</a>
+                {% else %}
+                <a href="/login/?next=/admin/" class="temp-link text-muted">Login here</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
 
 {% endblock content %}

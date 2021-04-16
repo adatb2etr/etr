@@ -10,35 +10,36 @@ from django.shortcuts import redirect
 from tartozas.admin import Tartozas
 from osztondij.models import Osztondij
 import random, string
+from django.contrib.auth.forms import UserCreationForm
 
 # /registeradmin/
 def register(response):
-    if is_EtrAdmin(response) is True:
-        if response.method == "POST":
-            form = EtrAdminForm(response.POST)
-            if form.is_valid():
+    #if is_EtrAdmin(response) is True:
+    if response.method == "POST":
+        form = EtrAdminForm(response.POST)
+        if form.is_valid():
 
-                #A 2 JELSZÓ MEZŐT ÖSSZEHASONLíTJA, ÉS HA MEGEGYEZIK AKKOR KREÁLJA AZ ACCOUNTOT
-                if form.data['jelszo'] == form.data['jelszo2']:
-                    #KREÁL EGY USER OBJECTET A DJANGO USER TÁBLÁJÁNAK IS, HOGY BE LEHESSEN LÉPNI AZ OLDALRA
+            #A 2 JELSZÓ MEZŐT ÖSSZEHASONLíTJA, ÉS HA MEGEGYEZIK AKKOR KREÁLJA AZ ACCOUNTOT
+            if form.data['jelszo'] == form.data['jelszo2']:
+                #KREÁL EGY USER OBJECTET A DJANGO USER TÁBLÁJÁNAK IS, HOGY BE LEHESSEN LÉPNI AZ OLDALRA
 
-                    encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()  #sima sha256 encryption.
-                    userJelszo = make_password(form.data['jelszo'])   # ez a django password encryptiont használja, dont tuch, ez a django_user táblához kell
+                encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()  #sima sha256 encryption.
+                userJelszo = make_password(form.data['jelszo'])   # ez a django password encryptiont használja, dont tuch, ez a django_user táblához kell
 
-                    User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
-                                        last_name=form.data['vezeteknev']
-                                        , email=form.data['email'], password=userJelszo)
+                User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
+                                    last_name=form.data['vezeteknev']
+                                    , email=form.data['email'], password=userJelszo)
 
-                    print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
-                    EtrAdmin.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
-                                        ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'])
-                else:
-                    print(f"\n\n\n\nRossz a 2 jelszó!\n\n\n\n")
-        else:
-            form = EtrAdminForm()
-        return render(response, "register/registerAdmin.html", {"form": form})
+                print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
+                EtrAdmin.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
+                                    ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'])
+            else:
+                print(f"\n\n\n\nRossz a 2 jelszó!\n\n\n\n")
     else:
-        return render(response, "teszt.html")
+        form = EtrAdminForm()
+    return render(response, "register/registerAdmin.html", {"form": form})
+    #else:
+    #    return render(response, "teszt.html")
 
 
 # /register/
@@ -115,8 +116,19 @@ def registerFelhasznalo(response):
     else:
         return redirect("../teszt/")
 
+def loginPage(request):
+    form = UserCreationForm()
+    context = {'form': form}
+    return render(request, 'registration/login.html', context)
+
+#regisztráció teszt
+def registerPage(request):
+    form = UserCreationForm()
+    context = {'form': form}
+    return render(request, 'register/registerFelhasznalo.html', context)
 
 def sample_view(response):
 
     print("gomb megnyomva")
     return render(response, "teszt.html")
+

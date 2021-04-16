@@ -31,9 +31,10 @@ from vizsgazik.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("registeradmin/", v.register, name="register"),
-    path("register/", v.registerFelhasznalo, name="registerFelhasznalo"),
+    path("register/", v.registerPage, name="registerFelhasznalo"),
     path("teszt/", v.sample_view, name="teszt"),
-    path('', include("django.contrib.auth.urls")),  #login
+    path('', include("django.contrib.auth.urls"), name="login"),  #login
+    #path('', v.loginPage, name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
 
 
