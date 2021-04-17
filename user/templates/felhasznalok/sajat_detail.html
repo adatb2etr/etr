@@ -1,35 +1,71 @@
-{% extends 'base.html' %}
+{% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <br><br><br>
-    <table style="margin-left: 30px; size: 600px; font-size: 42px">
-        <tr>
-            <th>Azonosító</th>
-            <th>Vezetéknév</th>
-            <th>Keresztnév</th>
-            <th>Személyi szám</th>
-            <th>Születési Idő</th>
-            <th>Telefonszám</th>
-            <th>Email</th>
-            <th>Jelszó</th>
-        </tr>
-
-        <tr>
-            <td> {{ obj.azonosito }}</td>
-                <td>{{ obj.vezeteknev }}</td>
-                <td>{{ obj.keresztnevev }}</td>
-                <td>{{ obj.szemelyiszam }} </td>
-                <td>{{ obj.szulido }} </td>
-                <td>{{ obj.telefonszam }}</td>
-                <td>{{ obj.email }}</td>
-                <td>{{ obj.jelszo }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <th>Adatok</th>
+            <td></td>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Azonosító:</th>
+                <td> {{ obj.azonosito }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Vezetéknév:</th>
+                <td>{{ obj.vezeteknev }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Keresztnév:</th>
+                <td>{{ obj.keresztnevev }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Személyi szám:</th>
+                <td>{{ obj.szemelyiszam }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Születési idő:</th>
+                <td>{{ obj.szulido }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Telefonszám:</th>
+                <td>{{ obj.telefonszam }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ obj.email }} random adat sry</td>
+            </tr>
+            <tr>
+                <th>Jelszó:</th>
+                <td>{{ obj.jelszo }} random adat sry</td>
+            </tr>
+        </tbody>
     </table>
-
     {% if  role  == "admin" %}
-        ADMIIIIIN
+        ADMIIIIIN<br>
     {% endif %}
-
-     <p style="font-size: 42px"> <a href="../felhasznalok/{{ obj.azonosito }}/update/"> Szerkesztés</a>
-       <a href="../felhasznalok/{{ obj.azonosito }}/delete/">Törlés - CSAK ADMINOKNAK, MAJD VKI A FRONTENDEN ELTÜNTETI LOL</a> </p>
+    <div class="buttons">
+        <button type="button" class="btn btn-primary"><a href="../felhasznalok/{{ obj.azonosito }}/update/">Szerkesztés</a></button>
+        <button type="button" class="btn btn-primary"><a href="../felhasznalok/{{ obj.azonosito }}/delete/">Törlés - CSAK ADMINOKNAK, MAJD VKI A FRONTENDEN ELTÜNTETI LOL</a></button>
+    </div>
 {% endblock %}
+
+<!--            <th>Azonosító</th>
+                <th>Vezetéknév</th>
+                <th>Keresztnév</th>
+                <th>Személyi szám</th>
+                <th>Születési Idő</th>
+                <th>Telefonszám</th>
+                <th>Email</th>
+                <th>Jelszó</th>
+            
+                <td> {{ obj.azonosito }} meg random adat sry</td>
+                <td>{{ obj.vezeteknev }} meg random adat sry</td>
+                <td>{{ obj.keresztnevev }} meg random adat sry</td>
+                <td>{{ obj.szemelyiszam }} meg random adat sry</td>
+                <td>{{ obj.szulido }} meg random adat sry</td>
+                <td>{{ obj.telefonszam }} meg random adat sry</td>
+                <td>{{ obj.email }} meg random adat sry</td>
+                <td>{{ obj.jelszo }} meg random adat sry</td>
+            
+            -->

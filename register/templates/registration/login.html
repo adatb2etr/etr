@@ -5,11 +5,10 @@
 {% block content %}
 
     <div class="login-section card-footer">
-        <form method="POST", class="form-group">
+        <form method="POST" class="form-group">
         	<div class="row jutify-content-center" id="login-card">
 	            <h1 class="title">Bejelentkezés</h1>
 	            {% csrf_token %}
-	            <!--{{ form|crispy }} -->
                 <div class="form-group">
                     <label for="neptunkod">Neptun kód: </label>
                     <input id="neptunkod" type="text" class="form-control" name="neptunkod" maxlength="30" required>

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from user.forms import EtrAdminForm, FelhasznaloForm
 from user.models import EtrAdmin, Oktato, Hallgato
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import hashlib
 from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
@@ -18,7 +19,6 @@ def register(response):
     if response.method == "POST":
         form = EtrAdminForm(response.POST)
         if form.is_valid():
-
             #A 2 JELSZÓ MEZŐT ÖSSZEHASONLíTJA, ÉS HA MEGEGYEZIK AKKOR KREÁLJA AZ ACCOUNTOT
             if form.data['jelszo'] == form.data['jelszo2']:
                 #KREÁL EGY USER OBJECTET A DJANGO USER TÁBLÁJÁNAK IS, HOGY BE LEHESSEN LÉPNI AZ OLDALRA
@@ -111,24 +111,33 @@ def registerFelhasznalo(response):
                     print(f"\n\n\n\nHiba!\n\n\n\n")
 
         else:
+            print(f"else")
             form = FelhasznaloForm()
         return render(response, "register/registerFelhasznalo.html", {"form": form})
     else:
         return redirect("../teszt/")
 
 def loginPage(request):
+    print("login")
+    user = authenticate(password="david", username="david")
     form = UserCreationForm()
     context = {'form': form}
     return render(request, 'registration/login.html', context)
 
 #regisztráció teszt
 def registerPage(request):
-    form = UserCreationForm()
-    context = {'form': form}
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            print(form)
+            form.save()
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    print("register")
     return render(request, 'register/registerFelhasznalo.html', context)
 
 def sample_view(response):
-
     print("gomb megnyomva")
     return render(response, "teszt.html")
 

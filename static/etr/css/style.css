@@ -27,7 +27,6 @@ footer{
     font-weight: 700;
 }
 
-
 .temp-link{
     text-decoration: none;
 }
@@ -46,6 +45,11 @@ footer{
 
 .navbar-nav li a{
     color: white !important;
+}
+
+.nav-link-logout{
+    position: relative;
+    top: -50px;
 }
 
 #id_username{
@@ -69,10 +73,28 @@ footer{
     top: -40px;
 }
 
+#navbar_logged_in{
+    font-size: 20px !important;
+    padding: 0;
+    top: 15px;
+    float: right;
+}
+
+#navbarNav a{
+    color:white;
+    text-decoration: none;
+}
+
 #logo{
     position: relative;
     transform: scale(0.25);
     top: -150px;
+}
+
+#logo_logged_in{
+    position: relative;
+    transform: scale(0.25);
+    top: -100px;
 }
 
 #logo-container{
@@ -80,6 +102,7 @@ footer{
     background-color: #469BD3 !important;
     font-weight: 500 !important;
     padding-bottom: 15px !important;
+    display: block;
 }
 
 #login-card button{
@@ -87,4 +110,24 @@ footer{
     width: 50% !important;
     margin-top: 15px !important;
     left: 25% !important;
+}
+
+button a{
+    color: white;
+    text-decoration: none;
+}
+
+button a:hover{
+    color:white;
+}
+
+.buttons{
+    position:relative;
+    display:inline;        
+}
+
+.dropdown-show{
+    position: relative;
+    display: inline-block;
+    top: -110px;
 }

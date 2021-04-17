@@ -33,8 +33,8 @@ urlpatterns = [
     path("registeradmin/", v.register, name="register"),
     path("register/", v.registerPage, name="registerFelhasznalo"),
     path("teszt/", v.sample_view, name="teszt"),
-    path('', include("django.contrib.auth.urls"), name="login"),  #login
-    #path('', v.loginPage, name="login"),
+    #path('', include("django.contrib.auth.urls"), name="login"),  #login
+    path('', v.loginPage, name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name='user/logout.html'), name='logout'),
 
 
@@ -80,11 +80,11 @@ urlpatterns = [
     path('tartozasok/<str:hallgatoAzonosito>/delete/', tartozas_delete_view, name='tartozas-delete'),
     path('tartozasok/', tartozas_list_view, name='Tartozas lista'),
 
-    path('osztondijjak/create/', osztondij_create_view, name='osztondij-create'),
-    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/', osztondij_lookup_view, name='osztondij-detail'),
-    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/update/', osztondij_update_view, name='osztondij-update'),
-    path('osztondijjak/<str:hallgatoAzonositoOsztondij>/delete/', osztondij_delete_view, name='osztondij-delete'),
-    path('osztondijjak/', osztondij_list_view, name='Osztondij lista'),
+    path('osztondijak/create/', osztondij_create_view, name='osztondij-create'),
+    path('osztondijak/<str:hallgatoAzonositoOsztondij>/', osztondij_lookup_view, name='osztondij-detail'),
+    path('osztondijak/<str:hallgatoAzonositoOsztondij>/update/', osztondij_update_view, name='osztondij-update'),
+    path('osztondijak/<str:hallgatoAzonositoOsztondij>/delete/', osztondij_delete_view, name='osztondij-delete'),
+    path('osztondijak/', osztondij_list_view, name='Osztondij lista'),
 
     path('vizsgak/create/', vizsga_create_view, name='vizsga-create'),
     path('vizsgak/<int:vizsgaID>/', vizsga_lookup_view, name='vizsga-detail'),
