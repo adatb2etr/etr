@@ -19,10 +19,10 @@
                 </div>
                 <button type="submit", class="btn btn-primary login-button">Bejelentkezés</button>
                 {% if user.is_authenticated %}
-                    ur logged in
                 <a href="{{ HTTP_HOST }}/me/">{{ user }} - Settings</a><br>
+                {% if  role  == "admin" %}
                 <a href="{{ HTTP_HOST }}/felhasznalok/">Felhasználó Lista - Csak EtrAdminoknak amúgy redirectel</a><br>
-
+                {% endif %}
                 <a href="/logout/?next=/login/" class="temp-link text-muted">Logout here</a>
                 {% else %}
                 <a href="/login/?next=/admin/" class="temp-link text-muted">Login here</a>

@@ -128,21 +128,19 @@ def felhasznalok_delete_view(request, UserAzonosito):
 
 
 def sajat_detail_view(request):
+    print(request.user)
+    role = getRole(request.user)
+    print(role)
 
-#     role = getRole(request.user)
+    if role == "admin":
+        user = EtrAdmin.objects.get(azonosito=request.user)
+    elif role == "oktato":
+        user = Oktato.objects.get(azonosito=request.user)
+    elif role == "hallgato":
+        user = Hallgato.objects.get(azonosito=request.user)
+    else:
+        return redirect("../teszt/")
 
-#    if role == "admin":
-#        user = EtrAdmin.objects.get(azonosito=request.user)
-#    elif role == "oktato":
-#        user = Oktato.objects.get(azonosito=request.user)
-#    elif role == "hallgato":
-#        user = Hallgato.objects.get(azonosito=request.user)
-#    else:
-#        return redirect("../teszt/")
-
-    #dummy kodom torolni kell
-    user = "david"
-    role = "admin"
     context = {
         "obj": user,
         "role" : role

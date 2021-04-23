@@ -15,36 +15,36 @@ from django.contrib.auth.forms import UserCreationForm
 
 # /registeradmin/
 def register(response):
-    #if is_EtrAdmin(response) is True:
-    if response.method == "POST":
-        form = EtrAdminForm(response.POST)
-        if form.is_valid():
-            #A 2 JELSZÓ MEZŐT ÖSSZEHASONLíTJA, ÉS HA MEGEGYEZIK AKKOR KREÁLJA AZ ACCOUNTOT
-            if form.data['jelszo'] == form.data['jelszo2']:
-                #KREÁL EGY USER OBJECTET A DJANGO USER TÁBLÁJÁNAK IS, HOGY BE LEHESSEN LÉPNI AZ OLDALRA
+    if is_EtrAdmin(response) is True:
+        if response.method == "POST":
+            form = EtrAdminForm(response.POST)
+            if form.is_valid():
+                #A 2 JELSZÓ MEZŐT ÖSSZEHASONLíTJA, ÉS HA MEGEGYEZIK AKKOR KREÁLJA AZ ACCOUNTOT
+                if form.data['jelszo'] == form.data['jelszo2']:
+                    #KREÁL EGY USER OBJECTET A DJANGO USER TÁBLÁJÁNAK IS, HOGY BE LEHESSEN LÉPNI AZ OLDALRA
 
-                encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()  #sima sha256 encryption.
-                userJelszo = make_password(form.data['jelszo'])   # ez a django password encryptiont használja, dont tuch, ez a django_user táblához kell
+                    encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()  #sima sha256 encryption.
+                    userJelszo = make_password(form.data['jelszo'])   # ez a django password encryptiont használja, dont tuch, ez a django_user táblához kell
 
-                User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
-                                    last_name=form.data['vezeteknev']
-                                    , email=form.data['email'], password=userJelszo)
+                    User.objects.create(username=form.data['azonosito'], first_name=form.data['keresztnev'],
+                                        last_name=form.data['vezeteknev']
+                                        , email=form.data['email'], password=userJelszo)
 
-                print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
-                EtrAdmin.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
-                                    ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'])
-            else:
-                print(f"\n\n\n\nRossz a 2 jelszó!\n\n\n\n")
+                    print(f"\n\n\n\n{form.data['jelszo']}\n\n\n\n")
+                    EtrAdmin.objects.create(azonosito=form.data['azonosito'], keresztnev=form.data['keresztnev'], vezeteknev=form.data['vezeteknev']
+                                        ,email=form.data['email'], jelszo=encryptedJelszo, telefonszam=form.data['telefonszam'])
+                else:
+                    print(f"\n\n\n\nRossz a 2 jelszó!\n\n\n\n")
+        else:
+            form = EtrAdminForm()
+        return render(response, "register/registerAdmin.html", {"form": form})
     else:
-        form = EtrAdminForm()
-    return render(response, "register/registerAdmin.html", {"form": form})
-    #else:
-    #    return render(response, "teszt.html")
+        return redirect("/")
 
 
 # /register/
 def registerFelhasznalo(response):
-    #if is_EtrAdmin(response) is True:
+    if is_EtrAdmin(response) is True:
         if response.method == "POST":
             form = FelhasznaloForm(response.POST)
             if form.is_valid():
@@ -53,14 +53,18 @@ def registerFelhasznalo(response):
                     encryptedJelszo = (hashlib.sha256(form.data['jelszo'].encode())).hexdigest()  #sima sha256 encryption.
                     userJelszo = make_password(form.data['jelszo'])
 
-                    if 'Oktato' in response.POST:
+                    if form.data['account_type'] == "2":
+                        print(f"oktato")
                         oktato = True
                     else:
+                        print(f"oktato nem")
                         oktato = False
 
-                    if 'Hallgato' in response.POST:
+                    if form.data['account_type'] == "1":
+                        print(f"hallgato")
                         hallgato = True
                     else:
+                        print(f"hallgato nem")
                         hallgato = False
 
                     if oktato is True and hallgato is False:
@@ -84,6 +88,7 @@ def registerFelhasznalo(response):
 
 
                     elif hallgato is True and oktato is False:
+                        print(f"hallgato")
                         id = "TESZTADMIN"
                         foglaltIDs=getids()
 
@@ -113,23 +118,28 @@ def registerFelhasznalo(response):
         else:
             form = FelhasznaloForm()
         return render(response, "register/registerFelhasznalo.html", {"form": form})
-    #else:
-    #    return redirect("../teszt/")
+    else:
+        return redirect("../")
 
+# /
 def loginPage(request):
-    form = FelhasznaloLoginForm(request.POST or None)
-    if form.is_valid():
-        username = form.data["neptunkod"]
-        password = form.data["jelszo"]
-        user = authenticate(request, username=username, password=password)
-        if user != None:
-            login(request, user)
-            return redirect("/me")
-        else:
-            request.session['invalid_user'] = 1
-    context = {'form': form}
-    return render(request, 'registration/login.html', context)
+    if is_Hallgato(request) or is_Oktato(request) or is_EtrAdmin(request):
+        return redirect("/me")
+    else:
+        form = FelhasznaloLoginForm(request.POST or None)
+        if form.is_valid():
+            username = form.data["neptunkod"]
+            password = form.data["jelszo"]
+            user = authenticate(request, username=username, password=password)
+            if user != None:
+                login(request, user)
+                return redirect("/me")
+            else:
+                request.session['invalid_user'] = 1
+        context = {'form': form}
+        return render(request, 'registration/login.html', context)
 
+# /logout
 def logoutPage(request):
     logout(request)
     return redirect("/")

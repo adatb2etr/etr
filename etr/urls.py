@@ -33,7 +33,6 @@ urlpatterns = [
     path("registeradmin/", v.register, name="register"),
     path("register/", v.registerFelhasznalo, name="registerFelhasznalo"),
     path("teszt/", v.sample_view, name="teszt"),
-    #path('', include("django.contrib.auth.urls"), name="login"),  #login
     path('', v.loginPage, name="login"),
     path('logout/',v.logoutPage, name='logout'),
 
