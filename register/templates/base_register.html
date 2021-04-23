@@ -14,23 +14,20 @@
     </head>
     <body>
         <header>
-          <div class="p-5 text-center bg-light" id="logo-container">
-            <div class="dropdown-show" id="first-column">
-              <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Menü
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Termek</a>
-                <a class="dropdown-item" href="#">Kurzusok</a>
-                <a class="dropdown-item" href="#">Tantárgyak</a>
-              </div>
-            </div>
-            <a href="/"><img src="{% static 'etr/images/neptun_logo.png' %}" id="logo_logged_in" alt="Logo"></a>
-            <nav class="navbar navbar-expand-lg navbar-lg" id="navbar_logged_in">
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <a class="nav-link-logout" href="/logout">Kijelentkezés</a>
-              </div>
+            <div class="p-5 text-center bg-light" id="logo-container">
+            <nav class="navbar navbar-expand-lg navbar-lg" id="navbar">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                 <ul class="navbar-nav">
+                  <li class="nav-item active">
+                       <a class="nav-link" href="/">Bejelentkezés</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Regisztráció</a>
+                  </li>
+                 </ul>
+                </div>
             </nav>
+            <a href="/"><img src="{% static 'etr/images/neptun_logo.png' %}" id="logo" alt="Logo"></a>
           </div>
         </header>
         <div class="card form-group custom-form" stlye="padding-top:15px">

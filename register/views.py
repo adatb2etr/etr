@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from user.forms import EtrAdminForm, FelhasznaloForm
+from user.forms import EtrAdminForm, FelhasznaloForm, FelhasznaloLoginForm
 from user.models import EtrAdmin, Oktato, Hallgato
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 import hashlib
 from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
@@ -44,7 +44,7 @@ def register(response):
 
 # /register/
 def registerFelhasznalo(response):
-    if is_EtrAdmin(response) is True:
+    #if is_EtrAdmin(response) is True:
         if response.method == "POST":
             form = FelhasznaloForm(response.POST)
             if form.is_valid():
@@ -111,33 +111,29 @@ def registerFelhasznalo(response):
                     print(f"\n\n\n\nHiba!\n\n\n\n")
 
         else:
-            print(f"else")
             form = FelhasznaloForm()
         return render(response, "register/registerFelhasznalo.html", {"form": form})
-    else:
-        return redirect("../teszt/")
+    #else:
+    #    return redirect("../teszt/")
 
 def loginPage(request):
-    print("login")
-    user = authenticate(password="david", username="david")
-    form = UserCreationForm()
+    form = FelhasznaloLoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.data["neptunkod"]
+        password = form.data["jelszo"]
+        user = authenticate(request, username=username, password=password)
+        if user != None:
+            login(request, user)
+            return redirect("/me")
+        else:
+            request.session['invalid_user'] = 1
     context = {'form': form}
     return render(request, 'registration/login.html', context)
 
-#regisztráció teszt
-def registerPage(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            print(form)
-            form.save()
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-    print("register")
-    return render(request, 'register/registerFelhasznalo.html', context)
+def logoutPage(request):
+    logout(request)
+    return redirect("/")
 
 def sample_view(response):
     print("gomb megnyomva")
     return render(response, "teszt.html")
-
