@@ -110,8 +110,7 @@ def registerFelhasznalo(response):
 
                         print(f"\n\n\nA hallgató ID-ja: {id}\n\n\n")
 
-                        Tartozas.objects.create(hallgatoAzonosito_id=id)
-                        Osztondij.objects.create(hallgatoAzonosito_id=id)
+
                 else:
                     print(f"\n\n\n\nHiba!\n\n\n\n")
 

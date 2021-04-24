@@ -1,0 +1,12 @@
+INSERT INTO kurzus VALUES ('MAT-172', 'Kalkulus 1', '0', '3', '3.emelet 303 Terem', 'W0S7KS', '0');
+INSERT INTO kurzus VALUES ('INF-233', 'Programozás 2', '0', '1', '2.emelet 205 Terem', '0704KB', '0');
+INSERT INTO kurzus VALUES ('INF-164', 'Prognyelvek', '0', '5', '2.emelet 202 Terem', 'W0S7KS', '0');
+INSERT INTO kurzus VALUES ('INF-274', 'Assembly', '0', '2', '1.emelet 103 Terem', 'FRTW89', '0');
+INSERT INTO kurzus VALUES ('INF-155', 'Programozás Alapjai', '0', '4', '2.emelet 203 Terem', '0704KB', '0');
+INSERT INTO kurzus VALUES ('MAT-258', 'Algoritmusok 1', '0', '3', '2.emelet 203 Terem', '0704KB', '0');
+INSERT INTO kurzus VALUES ('MAT-289', 'Diszkrét Matek 1', '0', '4', '2.emelet 203 Terem', 'S6G6RT', '0');
+INSERT INTO kurzus VALUES ('MAT-295', 'Diszkrét Matek 2', '0', '2', '2.emelet 201 Terem', 'S6G6RT', '0');
+INSERT INTO kurzus VALUES ('INF-222', 'Szkriptnyelvek', '0', '3', '1.emelet 105 Terem', '0704KB', '0');
+INSERT INTO kurzus VALUES ('INF-199', 'Programozás 1', '0', '3', '2.emelet 203 Terem', 'S6G6RT', '0');
+INSERT INTO kurzus VALUES ('MAT-286', 'Algoritmusok 2', '0', '5', '2.emelet 201 Terem', 'W0S7KS', '0');
+INSERT INTO kurzus VALUES ('MAT-268', 'Kalkulus 2', '0', '3', '2.emelet 202 Terem', 'W0S7KS', '0');

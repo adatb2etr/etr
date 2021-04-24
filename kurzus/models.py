@@ -8,8 +8,9 @@ class Kurzus(models.Model):
     kurzusnev = models.CharField(max_length=64, null=False)
     ferohely = models.IntegerField(default=999, null=False)
     kredit = models.IntegerField(default=1, null=False)
-    teremCim = models.ForeignKey(Terem, null=False, on_delete=models.CASCADE, db_column="teremCim")
+    teremCim = models.ForeignKey(Terem, blank=True, null=True, on_delete=models.CASCADE, db_column="teremCim")
     oktatoAzonosito = models.ForeignKey(Oktato, max_length=6, null=True, on_delete=models.CASCADE, db_column="oktatoAzonosito", blank=True)
+    meghirdetett = models.IntegerField(default=0, null=False)
 
     class Meta:
         db_table = "kurzus"

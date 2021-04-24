@@ -1,0 +1,6 @@
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('MAT-268', 'MAT-172');
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('INF-233', 'INF-199');
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('INF-274", 'INF-155');
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('MAT-295', 'MAT-289');
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('MAT-286', 'MAT-258');
+INSERT INTO elofeltetel (kurzusKod, elofeltetelKod) VALUES ('INF-199', 'INF-155');
