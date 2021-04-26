@@ -78,9 +78,9 @@ def makeAlkalom(azonosito, kurzusKod):
         return False, False
 
 
-def makeKurzustFelvesz():
+def makeVizsgazik():
 
-        for i in range(1,3000):
+        for i in range(1,4000):
             hallgatoAzonosito = makeHallgato()
             kurzus, teljesitette = makeKurzusPlusszJegy(hallgatoAzonosito)
             kurzusCime = kurzus.kurzuskod
@@ -113,6 +113,7 @@ def makeKurzustFelvesz():
                 file.writelines(parancs + "\n")
 
             print(i)
+
 
 
 

@@ -50,11 +50,13 @@ def makeKurzustFelvesz():
                 atment = 1
 
             parancs = f"INSERT INTO kurzustfelvesz (hallgatoAzonosito, kurzuskod, teljesitette) VALUES ('{hallgato}', " \
-                      f" '{x}, {atment}');"
+                      f" '{x}', {atment});"
             print(f"{i} {parancs}")
 
-            Kurzustfelvesz.objects.create(hallgatoAzonosito=hallgatoObject, kurzusKod=kurzusObject, teljesitette=atment)
+        #   Kurzustfelvesz.objects.create(hallgatoAzonosito=hallgatoObject, kurzusKod=kurzusObject, teljesitette=atment)
 
             with open("kurzustfelvesz.txt", 'a') as file:
                 file.writelines(parancs + "\n")
+
+
 
