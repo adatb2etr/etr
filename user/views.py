@@ -3,6 +3,8 @@ import hashlib
 from django.shortcuts import render, get_object_or_404, redirect
 from user.forms import FelhasznaloForm, EtrAdminForm
 from user.models import EtrAdmin, Oktato, Hallgato
+from kurzus.models import Kurzus
+from kurzustfelvesz.models import Kurzustfelvesz
 from user.forms import *
 from user.validators.validators import is_EtrAdmin, is_Hallgato, is_Oktato
 from django.contrib.auth.models import User
@@ -146,3 +148,36 @@ def sajat_detail_view(request):
         "role" : role
     }
     return render(request, "felhasznalok/sajat_detail.html", context)
+
+
+def sajat_kurzus_view(request):
+    role = getRole(request.user)
+    felvettKurzusok = None
+    felvettKurzusokTeljesitette = None
+
+    if role == "admin":
+        user = EtrAdmin.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.all()
+    elif role == "oktato":
+        user = Oktato.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.filter(oktatoAzonosito=request.user)
+
+    elif role == "hallgato":
+        user = Hallgato.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.filter(meghirdetett=1)
+        felvettKurzusokAzonosito = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("kurzusKod", flat=True))
+        felvettKurzusokTeljesitette = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("teljesitette", flat=True))
+        felvettKurzusok = Kurzus.objects.filter(kurzuskod__in=felvettKurzusokAzonosito)
+
+        felvettKurzusok = zip(felvettKurzusok, felvettKurzusokTeljesitette)
+
+    else:
+        return redirect("../teszt/")
+
+    context = {
+        "obj": user,
+        "role" : role,
+        "object_list": kurzusok,
+        "felvettKurzusok": felvettKurzusok,
+    }
+    return render(request, "felhasznalok/sajat_kurzusok.html", context)

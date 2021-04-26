@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table>
+        <tr>
+           <th>Kurzus Kódja</th>
+            <th>Kurzus Neve</th>
+            <th>Kredit</th>
+            <th>Terem Címe</th>
+            <th>Oktató Azonosítója</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.kurzuskod }}</a></td>
+                <td> {{ instance.kurzusnev }}  </td>
+                <td> {{ instance.kredit }}  </td>
+                <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
+                <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+    
+    {% if role == "hallgato" %}
+    <H1>Felvett Kurzusaim</H1>
+
+    <table>
+        <tr>
+           <th>Kurzus Kódja</th>
+            <th>Kurzus Neve</th>
+            <th>Kredit</th>
+            <th>Terem Címe</th>
+            <th>Oktató Azonosítója</th>
+            <th>Teljesítette</th>
+        </tr>
+    {% for instance, teljesitette in felvettKurzusok %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.kurzuskod }}</a></td>
+                <td> {{ instance.kurzusnev }}  </td>
+                <td> {{ instance.kredit }}  </td>
+                <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
+                <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
+                <td> {{ teljesitette }}  </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+
+
+
+{% endblock %}
