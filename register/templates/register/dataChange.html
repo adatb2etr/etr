@@ -1,4 +1,4 @@
-{% extends "base_register.html" %}
+{% extends "base_data_change.html" %}
 
 <h1>REGISZTRÁLÁS!4!</h1>
 
@@ -6,11 +6,11 @@
 
     <div class="login-section card-footer">
         <form method="POST", class="form-group">
-            <h1 class="title">Regisztráció</h1>
+            <h1 class="title">Felhasználói adatok változtatása</h1>
             {% csrf_token %}
             <div class="row jutify-content-center" id="login-card">
                 {{ form }}
-                <button type="submit" class="btn btn-primary login-button">Regisztráció</button>
+                <button type="submit" class="btn btn-primary login-button">Mentés</button>
                 {% if user.is_authenticated %}
                 <a href="{{ HTTP_HOST }}/me/">Beállítások - {{ user }}</a><br>
                 {% if role == "admin" %}

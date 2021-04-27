@@ -93,7 +93,7 @@ def felhasznalok_update_view(request, UserAzonosito):
         context = {
             'form': form
         }
-        return render(request, "register/registerFelhasznalo.html", context)  #ez még csak temporális majd a frontendesek kicserélik LOL
+        return render(request, "register/dataChange.html", context)  #ez még csak temporális majd a frontendesek kicserélik LOL
     return redirect("../../..teszt")
 
 
@@ -126,14 +126,13 @@ def felhasznalok_delete_view(request, UserAzonosito):
         return render(request, "felhasznalok/felhasznalok_delete.html", context)
     return redirect("../../..teszt")
 
-
+# /me
 def sajat_detail_view(request):
     print(request.user)
     role = getRole(request.user)
-    print(role)
-
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
+        return redirect("../kurzusok/")
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
     elif role == "hallgato":
@@ -146,3 +145,36 @@ def sajat_detail_view(request):
         "role" : role
     }
     return render(request, "felhasznalok/sajat_detail.html", context)
+
+
+def sajat_kurzus_view(request):
+    role = getRole(request.user)
+    felvettKurzusok = None
+    felvettKurzusokTeljesitette = None
+
+    if role == "admin":
+        user = EtrAdmin.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.all()
+    elif role == "oktato":
+        user = Oktato.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.filter(oktatoAzonosito=request.user)
+
+    elif role == "hallgato":
+        user = Hallgato.objects.get(azonosito=request.user)
+        kurzusok = Kurzus.objects.filter(meghirdetett=1)
+        felvettKurzusokAzonosito = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("kurzusKod", flat=True))
+        felvettKurzusokTeljesitette = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("teljesitette", flat=True))
+        felvettKurzusok = Kurzus.objects.filter(kurzuskod__in=felvettKurzusokAzonosito)
+
+        felvettKurzusok = zip(felvettKurzusok, felvettKurzusokTeljesitette)
+
+    else:
+        return redirect("../teszt/")
+
+    context = {
+        "obj": user,
+        "role" : role,
+        "object_list": kurzusok,
+        "felvettKurzusok": felvettKurzusok,
+    }
+    return render(request, "felhasznalok/sajat_kurzusok.html", context)

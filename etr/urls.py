@@ -1,5 +1,4 @@
 """etr URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -42,6 +41,7 @@ urlpatterns = [
     path('felhasznalok/<str:UserAzonosito>/update/',felhasznalok_update_view, name="FelhasznaloUpdateView"),
     path('felhasznalok/<str:UserAzonosito>/delete/', felhasznalok_delete_view, name="FelhasznaloDeleteView"),
     path('me/', sajat_detail_view, name="Me"),
+    path('me/kurzusok', sajat_kurzus_view, name="Kurzusaim"),
 
     path('termek/create/', terem_create_view, name ='terem-create'),
     path('termek/<str:terem_cim>/', terem_lookup_view, name='terem-detail'),

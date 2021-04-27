@@ -1,19 +1,18 @@
 {% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <a href="../../vizsgazik/create"><h3>Új vizsgazik felvétele</h3></a>
-    <table>
-        <tr>
-            <th>Vizsgazik Kódja</th>
-            <th>Vizsga Kódja</th>
-            <th>Kurzus Neve</th>
-            <th>Hallgató Azonosítója</th>
+    <table class="table">
+        <thead>
+            <th>Vizsgázik kódja</th>
+            <th>Vizsga kódja</th>
+            <th>Kurzus neve</th>
+            <th>Hallgató azonosítója</th>
             <th>Időpont</th>
             <th>Kapott jegy</th>
-            <th>Vizsga alkalma</th>
-
-        </tr>
-    {% for instance in object_list %}
+            <th>Vizsga alkalmak száma</th>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
             <tr>
                 <td><a href="{{ instance.get_absolute_url }}">{{ instance.id }}</a></td>
                 <td><a href="{{ instance.vizsgaID.get_absolute_url }}">{{ instance.vizsgaID.vizsgaID }}</a></td>
@@ -23,6 +22,8 @@
                 <td>{{ instance.kapottjegy }}</td>
                 <td> {{ instance.vizsgaalkalom }} </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        </tbody>
     </table>
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../kurzusok/create">Új vizsgaeredmény felvétele</a></button>
 {% endblock %}

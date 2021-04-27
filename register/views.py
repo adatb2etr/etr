@@ -15,7 +15,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 # /registeradmin/
 def register(response):
-    if is_EtrAdmin(response) is True:
+    if True:#is_EtrAdmin(response) is True:
         if response.method == "POST":
             form = EtrAdminForm(response.POST)
             if form.is_valid():
@@ -133,6 +133,7 @@ def loginPage(request):
             user = authenticate(request, username=username, password=password)
             if user != None:
                 login(request, user)
+                print("loginPage redirect to /me")
                 return redirect("/me")
             else:
                 request.session['invalid_user'] = 1

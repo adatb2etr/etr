@@ -1,14 +1,37 @@
-{% extends 'base.html' %}
+{% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <a href="../../kurzusok/create"><h3>Új kurzus felvétele</h3></a>
-    <table>
+    <table class="table">
+        <thead>
+            <th>Kurzus kódja</th>
+            <th>Kurzus neve</th>
+            <th>Kreditszám</th>
+            <th>Terem száma</th>
+            <th>Oktató azonosítója</th>
+            <td></td>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.get_absolute_url }}"> {{ instance.kurzuskod }}</a></td>
+                <td> {{ instance.kurzusnev }}  </td>
+                <td> {{ instance.kredit }}  </td>
+                <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
+                <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
+                <td> <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele">Felvétel</button> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../kurzusok/create">Új kurzus felvétele</a></button>
+    <!--<table style="margin-left: 30px; size: 900px; font-size: 25px">
         <tr>
            <th>Kurzus Kódja</th>
             <th>Kurzus Neve</th>
             <th>Kredit</th>
             <th>Terem Címe</th>
             <th>Oktató Azonosítója</th>
+            <th></th>
         </tr>
     {% for instance in object_list %}
             <tr>
@@ -17,7 +40,8 @@
                 <td> {{ instance.kredit }}  </td>
                 <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
                 <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
+                <td> <button>Felvétel</button> </td>
             </tr>
         {% endfor %}
-    </table>
+    </table>-->
 {% endblock %}

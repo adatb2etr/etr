@@ -14,27 +14,27 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
     </head>
     <body>
-        <header>
-            <div class="p-5 text-center bg-light" id="logo-container">
-            <nav class="navbar navbar-expand-lg navbar-lg" id="navbar">
-                <div class="collapse navbar-collapse" id="navbarNav">
-                 <ul class="navbar-nav">
-                  <li class="nav-item active">
-                       <a class="nav-link" href="/">Bejelentkezés</a>
-                  </li>
-                 </ul>
-                </div>
-            </nav>
-            <a href="/"><img src="{% static 'etr/images/neptun_logo.png' %}" id="logo" alt="Logo"></a>
-          </div>
-        </header>
-        <div class="card form-group custom-form" stlye="padding-top:15px">
-            <div class="card-body">
-                {%  block content %}
-                    replace me
-                {% endblock %}
-            </div>
+      <header>
+          <div class="p-5 text-center bg-light" id="logo-container">
+          <nav class="navbar navbar-expand-lg navbar-lg" id="navbar">
+              <div class="collapse navbar-collapse" id="navbarNav">
+               <ul class="navbar-nav">
+                <li class="nav-item active">
+                     <a class="nav-link" href="/">Bejelentkezés</a>
+                </li>
+               </ul>
+              </div>
+          </nav>
+          <a href="/"><img src="{% static 'etr/images/neptun_logo.png' %}" id="logo" alt="Logo"></a>
         </div>
+      </header>
+      <div class="card form-group custom-form" stlye="padding-top:15px">
+          <div class="card-body">
+              {%  block content %}
+                  replace me
+              {% endblock %}
+          </div>
+      </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
       <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
       <script src="https://unpkg.com/@popperjs/core@2"></script>

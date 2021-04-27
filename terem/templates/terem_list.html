@@ -1,17 +1,19 @@
 {% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <a href="../../termek/create"><h3>Új terem felvétele</h3></a>
-    <table>
-        <tr>
-            <th>Cim</th>
+    <table class="table">
+        <thead>
+            <th>Név</th>
             <th>Kapacitás</th>
-        </tr>
-    {% for instance in object_list %}
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
             <tr>
                 <td><a href="{{ instance.get_absolute_url }}"> {{ instance.cim }}</a></td>
                 <td>{{ instance.kapacitas }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
+        </tbody>
     </table>
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../termek/create">Új terem felvétele</a></button>
 {% endblock %}
