@@ -1,14 +1,8 @@
 from etr.wsgi import *
-import hashlib
-import os
 import random
-import string
-import json
 import sys
-import itertools
 from kurzus.models import Kurzus
 from user.models import Hallgato
-from terem.models import Terem
 from kurzustfelvesz.models import Kurzustfelvesz
 
 hallgatok = list(Hallgato.objects.values_list("azonosito", flat=True))
@@ -76,10 +70,9 @@ def makeKurzustFelvesz():
                           f" '{x}', {atment}, {evszam});"
                 print(f"{i} {parancs}")
 
-                #Kurzustfelvesz.objects.create(hallgatoAzonosito=hallgatoObject, kurzusKod=kurzusObject, teljesitette=atment, evszam=evszam)
+                # NEM SZABAD KIKOMMENTEZNI EZT A SORT MERT AKKOR NEM FOG JÓ ADATOT GENERÁLNI
+                Kurzustfelvesz.objects.create(hallgatoAzonosito=hallgatoObject, kurzusKod=kurzusObject, teljesitette=atment, evszam=evszam)
 
                 with open("kurzustfelvesz.txt", 'a') as file:
                     file.writelines(parancs + "\n")
-
-
 

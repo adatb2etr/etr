@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'vizsga',
     'vizsgazik',
     'register.GENERATORS',
+    'kepzes',
+    'felvette',
+    'teljesitesfeltetel',
 ]
 
 MIDDLEWARE = [

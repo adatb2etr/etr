@@ -69,7 +69,7 @@ def makeOktato():
     return random.choice(oktatok)
 
 def makeMeghirdetett():
-    return 0
+    return 1
 
 
 def makeKurzus():

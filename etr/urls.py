@@ -27,6 +27,9 @@ from tartozas.views import *
 from osztondij.views import *
 from vizsga.views import *
 from vizsgazik.views import *
+from kepzes.views import *
+from felvette.views import *
+from teljesitesfeltetel.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -97,5 +100,23 @@ urlpatterns = [
     path('vizsgazik/<int:vizsgazikID>/update/', vizsgazik_update_view, name='vizsgazik-update'),
     path('vizsgazik/<int:vizsgazikID>/delete/', vizsgazik_delete_view, name='vizsgazik-delete'),
     path('vizsgazik/', vizsgazik_list_view, name='Vizsgazik lista'),
+
+    path('kepzesek/create/', kepzes_create_view, name='kepzes-create'),
+    path('kepzesek/<str:kepzesid>/', kepzes_lookup_view, name='kepzes-detail'),
+    path('kepzesek/<str:kepzesid>/update/', kepzes_update_view, name='kepzes-update'),
+    path('kepzesek/<str:kepzesid>/delete/', kepzes_delete_view, name='kepzes-delete'),
+    path('kepzesek/', kepzes_list_view, name='Kepzes lista'),
+
+    path('felvette/create/', felvette_create_view, name='felvette-create'),
+    path('felvette/<int:felvetteID>/', felvette_lookup_view, name='felvette-detail'),
+    path('felvette/<int:felvetteID>/update/', felvette_update_view, name='felvette-update'),
+    path('felvette/<int:felvetteID>/delete/', felvette_delete_view, name='felvette-delete'),
+    path('felvette/', felvette_list_view, name='Felvette lista'),
+
+    path('teljesitesfeltetelek/create/', teljesitesfeltetel_create_view, name='teljesitesfeltetel-create'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/', teljesitesfeltetel_lookup_view, name='teljesitesfeltetel-detail'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/update/', teljesitesfeltetel_update_view, name='teljesitesfeltetel-update'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/delete/', teljesitesfeltetel_delete_view, name='teljesitesfeltetel-delete'),
+    path('teljesitesfeltetelek/', teljesitesfeltetel_list_view, name='Teljesitesfeltetel lista'),
 
 ]

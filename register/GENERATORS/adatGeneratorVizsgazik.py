@@ -73,7 +73,11 @@ def makeAlkalom(azonosito, kurzusKod):
     alkalom = szamlalo + 1
 
     if alkalom < 4:
-        return alkalom, random.choice(felnemVettVizsgaIDk)
+        try:
+            felnemvettVizsgaIDkChoice = random.choice(felnemVettVizsgaIDk)
+            return alkalom, felnemvettVizsgaIDkChoice
+        except:
+            return False, False
     else:
         return False, False
 
@@ -107,13 +111,14 @@ def makeVizsgazik():
             vizsgaObject = Vizsga.objects.get(vizsgaID=vizsgaID)
             hallgatoObject = Hallgato.objects.get(azonosito=hallgatoAzonosito)
 
-            #Vizsgazik.objects.create(vizsgaID=vizsgaObject, hallgatoAzonosito=hallgatoObject, kapottjegy=jegy, vizsgaalkalom=alkalom)
+
+            # NEM SZABAD KIKOMMENTEZNI EZT A SORT MERT AKKOR NEM FOG JÓ ADATOT GENERÁLNI
+            Vizsgazik.objects.create(vizsgaID=vizsgaObject, hallgatoAzonosito=hallgatoObject, kapottjegy=jegy, vizsgaalkalom=alkalom)
 
             with open("vizsgazik.txt", 'a') as file:
                 file.writelines(parancs + "\n")
 
             print(i)
-
 
 
 

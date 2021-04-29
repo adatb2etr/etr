@@ -85,12 +85,6 @@ def makeSzulido():
 
     return f"{ev}-{honap}-{nap}"
 
-def makeKepzes():
-
-    kepzes = random.choice(["Gazdaságinformatikus", "Mérnök Informatikus", "Programtervező Informatikus", "Üzemmérnök", "Villamosmérnök"])
-
-    return kepzes
-
 
 def makeHallgatok():
 
@@ -102,18 +96,15 @@ def makeHallgatok():
         email = makeEmail(keresztnev)
         jelszo = makeJelszo(keresztnev)
         szulido = makeSzulido()
-        teljesitettkreditek = 0
-        kepzes = makeKepzes()
 
         parancs = f"INSERT INTO hallgato VALUES ('{azonosito}', '{vezeteknev}', '{keresztnev}', '{szemelyiszam}', '{telefonszam}'" \
-                  f", '{email}', '{jelszo}', TO_DATE('{szulido}', 'yyyy-mm-dd'), {teljesitettkreditek}, '{kepzes}');"
+                  f", '{email}', '{jelszo}', TO_DATE('{szulido}', 'yyyy-mm-dd'));"
 
         print (parancs)
 
         with open ("hallgatok.txt", 'a') as file:
 
             file.writelines(parancs + "\n")
-
 
 def makeOktato():
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../felvette/create"><h3>Új felvette felvétele</h3></a>
+    <table>
+        <tr>
+            <th> ID </th>
+             <th>Hallgató Azonosítója</th>
+            <th>Hallgató Neve</th>
+            <th>Képzés Azonosítója</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+            <td> <a href="{{ instance.get_absolute_url }}"> {{ instance.id }}</a></td>
+            <td> <a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito }} </a></td>
+            <td>{{ instance.hallgatoAzonosito.vezeteknev }} {{ instance.hallgatoAzonosito.keresztnev }} </td>
+            <td> <a href="{{ instance.kepzesId.get_absolute_url }}">{{ instance.kepzesId.kepzesid }}</a> </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
