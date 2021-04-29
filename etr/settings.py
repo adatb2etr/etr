@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'etr.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
+       'ENGINE': 'django.db.backends.oracle',
         'NAME': 'xe',
         'USER': 'system',
         'PASSWORD': 'oracle',

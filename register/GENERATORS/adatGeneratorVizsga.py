@@ -39,10 +39,18 @@ def makeIdopont():
 
 
             vizsgaidopont = datetime.datetime(year=2020, month=12, day=14, hour=randomOra, minute=0, second=0, microsecond=0) + datetime.timedelta(weeks=randomHet,days=randomNap)
+            vizsgaidopont2 = datetime.datetime(year=2019, month=12, day=14, hour=randomOra, minute=0, second=0, microsecond=0) + datetime.timedelta(weeks=randomHet,days=randomNap)
+            vizsgaidopont3 = datetime.datetime(year=2018, month=12, day=14, hour=randomOra, minute=0, second=0, microsecond=0) + datetime.timedelta(weeks=randomHet,days=randomNap)
+            vizsgaidopont4 = datetime.datetime(year=2017, month=12, day=14, hour=randomOra, minute=0, second=0, microsecond=0) + datetime.timedelta(weeks=randomHet,days=randomNap)
+            vizsgaidopont5 = datetime.datetime(year=2016, month=12, day=14, hour=randomOra, minute=0, second=0, microsecond=0) + datetime.timedelta(weeks=randomHet,days=randomNap)
             if(vizsgaidopont not in felhasznaltIdopontok):
                 flag = True
                 felhasznaltIdopontok.append(vizsgaidopont)
                 vizsgaIdopontok.append(vizsgaidopont)
+                vizsgaIdopontok.append(vizsgaidopont2)
+                vizsgaIdopontok.append(vizsgaidopont3)
+                vizsgaIdopontok.append(vizsgaidopont4)
+                vizsgaIdopontok.append(vizsgaidopont5)
 
     return vizsgaIdopontok
 
@@ -73,9 +81,8 @@ def makeVizsga():
                       f"TO_DATE('{idopont}', 'yyyy-mm-dd HH24:MI:SS'), {ferohely});"
 
             kurzusObject = Kurzus.objects.get(kurzuskod=kurzusKod)
-            Vizsga.objects.create(kurzusKod=kurzusObject, idopont=idopont, ferohely=ferohely)
+            #Vizsga.objects.create(kurzusKod=kurzusObject, idopont=idopont, ferohely=ferohely)
 
             with open("vizsgak.txt", 'a') as file:
                 file.writelines(parancs + "\n")
-
 

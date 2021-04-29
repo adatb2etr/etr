@@ -9,6 +9,7 @@ class Kurzustfelvesz(models.Model):
     hallgatoAzonosito = models.ForeignKey(Hallgato, null=False, db_column="hallgatoAzonosito", on_delete=models.CASCADE)
     kurzusKod = models.ForeignKey(Kurzus, null=False, db_column="kurzusKod", on_delete=models.CASCADE)
     teljesitette = models.IntegerField(null=False, default=0)
+    evszam = models.IntegerField(null=False, default=0)
 
     class Meta:
         db_table = "kurzustfelvesz"

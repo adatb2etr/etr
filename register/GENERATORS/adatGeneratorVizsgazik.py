@@ -51,8 +51,8 @@ def makeAlkalom(azonosito, kurzusKod):
 
     szamlalo = 0
 
-    vizsgak = Vizsga.objects.filter(kurzusKod=kurzusKod)
-
+    evszam = Kurzustfelvesz.objects.filter(hallgatoAzonosito__azonosito=azonosito).values_list("evszam", flat=True).first()
+    vizsgak = Vizsga.objects.filter(kurzusKod=kurzusKod, idopont__year=evszam)
     osszesVizsgaId = []
     felvettVizsgaID = []
 
@@ -107,13 +107,12 @@ def makeVizsgazik():
             vizsgaObject = Vizsga.objects.get(vizsgaID=vizsgaID)
             hallgatoObject = Hallgato.objects.get(azonosito=hallgatoAzonosito)
 
-            Vizsgazik.objects.create(vizsgaID=vizsgaObject, hallgatoAzonosito=hallgatoObject, kapottjegy=jegy, vizsgaalkalom=alkalom)
+            #Vizsgazik.objects.create(vizsgaID=vizsgaObject, hallgatoAzonosito=hallgatoObject, kapottjegy=jegy, vizsgaalkalom=alkalom)
 
             with open("vizsgazik.txt", 'a') as file:
                 file.writelines(parancs + "\n")
 
             print(i)
-
 
 
 
