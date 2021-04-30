@@ -7,6 +7,7 @@ import json
 import sys
 import datetime
 
+
 from kurzus.models import Kurzus
 from terem.models import Terem
 from vizsga.models import Vizsga
@@ -48,34 +49,39 @@ def makeKurzusPlusszJegy(hallgatoID):
 
 
 def makeAlkalom(azonosito, kurzusKod):
+    legutobbiVizsgaIdopontja = None
 
-    szamlalo = 0
+    evszam = Kurzustfelvesz.objects.filter(hallgatoAzonosito__azonosito=azonosito).values_list("evszam", flat=True).first() # melyik évben vette fel a kurzust
+    legutobbiVizsgaIdopontja = None
 
-    evszam = Kurzustfelvesz.objects.filter(hallgatoAzonosito__azonosito=azonosito).values_list("evszam", flat=True).first()
-    vizsgak = Vizsga.objects.filter(kurzusKod=kurzusKod, idopont__year=evszam)
-    osszesVizsgaId = []
-    felvettVizsgaID = []
+    try:
+        legutobbiVizsgaIdopontja = Vizsgazik.objects.values_list('vizsgaID__idopont', flat=True).filter(vizsgaID__kurzusKod=kurzusKod, hallgatoAzonosito__azonosito=azonosito).order_by('-vizsgaID__idopont').first()
+        legutobbiVizsgaJegye = Vizsgazik.objects.values_list('kapottjegy', flat=True).filter(vizsgaID__kurzusKod=kurzusKod, hallgatoAzonosito__azonosito=azonosito).order_by('-vizsgaID__idopont').first()
 
-    for x in vizsgak:
-        osszesVizsgaId.append(x.vizsgaID)
+        felvehetoVizsgak = Vizsgazik.objects.filter(vizsgaID__kurzusKod=kurzusKod, vizsgaID__idopont__year=evszam ,vizsgaID__idopont__gt=legutobbiVizsgaIdopontja) | Vizsgazik.objects.filter(vizsgaID__kurzusKod=kurzusKod, vizsgaID__idopont__year=evszam+1, vizsgaID__idopont__month__lte=11 ,vizsgaID__idopont__gt=legutobbiVizsgaIdopontja)              #visszaadja a felveheto vizsgakat
+
+    except:
+        if legutobbiVizsgaIdopontja is None:
+            felvehetoVizsgak = Vizsga.objects.filter(kurzusKod=kurzusKod, idopont__year=evszam)
+
+    try:
+        if(legutobbiVizsgaJegye > 1):  # ha már átment a vizsgán akkor kilép
+            return False, False
+    except:
         try:
-            vizsgakatFelvett = Vizsgazik.objects.get(vizsgaID=x, hallgatoAzonosito__azonosito=azonosito)
+            felvettVizsgaID = (random.choice(felvehetoVizsgak.values_list('vizsgaID', flat=True)))   # ha nem akkor már felvette
+        except: return False, False
 
-            if(vizsgakatFelvett.kapottjegy > 1):
-                return False, False
-            felvettVizsgaID.append(x.vizsgaID)
-            szamlalo += 1
-        except:
-            pass
 
-    felnemVettVizsgaIDk = [item for item in osszesVizsgaId if item not in felvettVizsgaID]
+    szamlalo = len(Vizsgazik.objects.filter(vizsgaID__kurzusKod=kurzusKod, hallgatoAzonosito=azonosito))
+
+
 
     alkalom = szamlalo + 1
 
-    if alkalom < 4:
+    if alkalom < 4: # ha több mint 3x kilép
         try:
-            felnemvettVizsgaIDkChoice = random.choice(felnemVettVizsgaIDk)
-            return alkalom, felnemvettVizsgaIDkChoice
+            return alkalom, felvettVizsgaID   # visszaadja az újonnan felvett vizsgát és hogy hanyadikra vette fel
         except:
             return False, False
     else:
@@ -84,7 +90,7 @@ def makeAlkalom(azonosito, kurzusKod):
 
 def makeVizsgazik():
 
-        for i in range(1,4000):
+        for i in range(1,6000):
             hallgatoAzonosito = makeHallgato()
             kurzus, teljesitette = makeKurzusPlusszJegy(hallgatoAzonosito)
             kurzusCime = kurzus.kurzuskod
@@ -106,7 +112,7 @@ def makeVizsgazik():
             parancs = f"INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) VALUES " \
                       f"('{vizsgaID}', " \
                       f"'{hallgatoAzonosito}', {jegy}, {alkalom});"
-            print(parancs)
+            print(f"{i}  {parancs}")
 
             vizsgaObject = Vizsga.objects.get(vizsgaID=vizsgaID)
             hallgatoObject = Hallgato.objects.get(azonosito=hallgatoAzonosito)
@@ -118,8 +124,8 @@ def makeVizsgazik():
             with open("vizsgazik.txt", 'a') as file:
                 file.writelines(parancs + "\n")
 
-            print(i)
 
 
 
+makeVizsgazik()
 

@@ -164,7 +164,7 @@ CREATE TABLE vizsga(
     CONSTRAINT vizsgaKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod) ON DELETE CASCADE
 );
 
-
+truncate table vizsgazik;
 CREATE TABLE vizsgazik(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     vizsgaID NUMBER not null,
@@ -234,6 +234,14 @@ END;
 
 
 
+
+CREATE OR REPLACE TRIGGER tartozas_fizetes
+AFTER INSERT ON befizetes
+FOR EACH ROW
+
+BEGIN
+UPDATE tartozas SET tartozasosszeg = tartozasosszeg - :NEW.befizetesosszeg where tartozas.hallgatoAzonosito = :NEW.hallgatoAzonosito;
+END;
 
 
 COMMIT WORK;
@@ -2407,8 +2415,6 @@ INSERT INTO kurzustfelvesz (hallgatoAzonosito, kurzuskod, teljesitette, evszam) 
 
 
 
-
-
 --VIZSGAZIKK--
 INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) VALUES ('313', 'ZIGB5L', 4, 1);
 INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) VALUES ('56', 'B1LDB8', 5, 1);
@@ -3817,5 +3823,35 @@ INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) V
 INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) VALUES ('345', '7UCR4L', 5, 2);
 INSERT INTO vizsgazik (vizsgaID, hallgatoAzonosito, kapottjegy, vizsgaalkalom) VALUES ('308', 'G6PG40', 1, 2);
 
+
+--BEFIZETES--
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('YA4GE5', 3000, TO_DATE('2016-12-31 14:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('CI3GKZ', 3000, TO_DATE('2017-12-28 17:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('LRVX5A', 3000, TO_DATE('2019-12-28 17:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('EGL2JA', 3000, TO_DATE('2017-12-28 17:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('5LZ0WJ', 3000, TO_DATE('2017-12-31 14:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('MEPFTY', 3000, TO_DATE('2016-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('ICSORU', 3000, TO_DATE('2017-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('3DHWEA', 3000, TO_DATE('2017-12-29 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('HJY33A', 3000, TO_DATE('2017-12-29 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('EHS14Y', 3000, TO_DATE('2016-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('UVR6K0', 3000, TO_DATE('2020-12-29 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('GN1ND7', 3000, TO_DATE('2017-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('WG8IJT', 3000, TO_DATE('2019-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('8JCBS0', 4500, TO_DATE('2019-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('H1W1G8', 3000, TO_DATE('2016-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('U3HKVR', 3000, TO_DATE('2017-12-24 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('CZ5ESN', 3000, TO_DATE('2020-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('6WUEC5', 3000, TO_DATE('2017-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('OFYNUP', 3000, TO_DATE('2018-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('8TTS56', 3000, TO_DATE('2019-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('G3S7BZ', 3000, TO_DATE('2016-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('565SOD', 4500, TO_DATE('2020-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('VU4EHX', 3000, TO_DATE('2019-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('T42SHP', 3000, TO_DATE('2019-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('635XLU', 3000, TO_DATE('2020-12-31 14:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('J6DS0M', 4500, TO_DATE('2020-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('GDF3IV', 1500, TO_DATE('2016-12-31 18:00:00', 'yyyy-mm-dd hh24:mi:ss'));
+INSERT INTO befizetes (hallgatoAzonosito, befizetesosszeg, datum) VALUES ('6BKSYD', 1500, TO_DATE('2016-12-31 16:00:00', 'yyyy-mm-dd hh24:mi:ss'));
 
 COMMIT WORK;
