@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'kepzes',
     'felvette',
     'teljesitesfeltetel',
+    'befizetes',
 ]
 
 MIDDLEWARE = [

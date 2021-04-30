@@ -30,6 +30,7 @@ from vizsgazik.views import *
 from kepzes.views import *
 from felvette.views import *
 from teljesitesfeltetel.views import *
+from befizetes.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -118,5 +119,11 @@ urlpatterns = [
     path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/update/', teljesitesfeltetel_update_view, name='teljesitesfeltetel-update'),
     path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/delete/', teljesitesfeltetel_delete_view, name='teljesitesfeltetel-delete'),
     path('teljesitesfeltetelek/', teljesitesfeltetel_list_view, name='Teljesitesfeltetel lista'),
+
+    path('befizetesek/create/', befizetes_create_view, name='befizetes-create'),
+    path('befizetesek/<int:befizetesID>/', befizetes_lookup_view, name='befizetes-detail'),
+    path('befizetesek/<int:befizetesID>/update/', befizetes_update_view, name='befizetes-update'),
+    path('befizetesek/<int:befizetesID>/delete/', befizetes_delete_view, name='befizetes-delete'),
+    path('befizetesek/', befizetes_list_view, name='Befizetes lista'),
 
 ]

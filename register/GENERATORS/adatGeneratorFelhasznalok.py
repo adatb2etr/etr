@@ -1,9 +1,10 @@
-# INSERT INTO hallgato VALUES ('ABD123', 'TESZT', 'HALLGATO', 'TESZTHALLGATO', '312321', 'TESZTHALLGATO@TESZTHALLGATO.HU', 'tokmind1', TO_DATE('2012-12-12', 'yyyy-mm-dd'), 0, 'Gazdasaginformatikus');
+from etr.wsgi import *
 import hashlib
 import os
 import random
 import string
 import json
+import sys
 
 felhasznaltAzonositok = []
 

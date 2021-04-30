@@ -6,7 +6,7 @@ from .models import Tartozas
 class TartozasForm(forms.ModelForm):
 
     hallgatoAzonosito = FelhasznaloForm()
-    befizetesOsszege = forms.IntegerField(widget=forms.TextInput(attrs={"placeholder": "Befizetés Összege"}))
+    befizetesOsszege = forms.IntegerField(widget=forms.TextInput(attrs={"placeholder": "Tartozas Összege"}))
 
     class Meta:
         model = Tartozas

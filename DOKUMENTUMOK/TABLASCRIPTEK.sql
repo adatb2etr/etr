@@ -19,6 +19,7 @@ drop table elofeltetel;
 drop table teljesitesfeltetel;
 drop table kurzus;
 drop table terem;
+drop table befizetes;
 drop table osztondij;
 drop table tartozas;
 drop table felvette;
@@ -86,7 +87,7 @@ CREATE TABLE oktato(
 
 
 CREATE TABLE tartozas(
-    hallgatoAzonosito VARCHAR2(6),
+    hallgatoAzonosito VARCHAR2(6) not null,
     tartozasosszeg INT default 0,
     CONSTRAINT hallgatoTartozas_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
 );
@@ -99,6 +100,14 @@ CREATE TABLE osztondij(
     CONSTRAINT hallgatoOsztondijfk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
 );
 
+
+CREATE TABLE befizetes(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    hallgatoAzonosito VARCHAR2(6),
+    befizetesosszeg INT default 0 not null,
+    datum timestamp not null,
+    CONSTRAINT befizetes_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
+);
 
 CREATE TABLE terem(
     cim VARCHAR2(64) not null,

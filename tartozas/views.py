@@ -30,10 +30,9 @@ def tartozas_update_view(request, hallgatoAzonosito):
         if form.is_valid():
             hallgatoID = obj.hallgatoAzonosito
             tartozasOsszege = int(obj.tartozasosszeg)
-            ujEgyenleg = tartozasOsszege - (int(form.data['befizetesOsszege']))
 
             obj.delete()
-            Tartozas.objects.create(hallgatoAzonosito=hallgatoID, tartozasosszeg=ujEgyenleg)
+            Tartozas.objects.create(hallgatoAzonosito=hallgatoID, tartozasosszeg=tartozasOsszege)
 
 
             return redirect("../../../tartozasok/")
