@@ -4,7 +4,7 @@ from user.models import Oktato, Hallgato
 
 class Tema(models.Model):
 
-    nev = models.CharField(primary_key=True, max_length=20, null=False)
+    nev = models.CharField(primary_key=True, max_length=200, null=False)
     
     class Meta:
         db_table = "tema"
@@ -15,13 +15,13 @@ class Tema(models.Model):
 class OktatoUzenet(models.Model):
 
     id = models.AutoField(primary_key=True, db_column="id", default=0)
-    uzenet = models.CharField(max_length=20, null=False)
-    datum = models.DateTimeField(max_length=20, null=False)    
-    tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="temaNev")
+    uzenet = models.CharField(max_length=2000, null=False)
+    datum = models.DateTimeField(null=False, auto_now_add=True)
+    tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")
     userId = models.ForeignKey(Oktato, max_length=6, null=True, on_delete=models.CASCADE, db_column="oktatoAzonosito", blank=True)
     
     class Meta:
-        db_table = "forumOktato"
+        db_table = "oktatouzenet"
 
     def __str__(self):
         return str(self.uzenet + " (" + self.datum + ")")
@@ -29,13 +29,13 @@ class OktatoUzenet(models.Model):
 class HallgatoUzenet(models.Model):
 
     id = models.AutoField(primary_key=True, db_column="id", default=0)
-    uzenet = models.CharField(max_length=20, null=False)
-    datum = models.DateTimeField(max_length=20, null=False)    
-    tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="temaNev")
+    uzenet = models.CharField(max_length=2000, null=False)
+    datum = models.DateTimeField(null=False, auto_now_add=True)
+    tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")
     userId = models.ForeignKey(Hallgato, max_length=6, null=True, on_delete=models.CASCADE, db_column="hallgatoAzonosito", blank=True)
     
     class Meta:
-        db_table = "forumHallgato"
+        db_table = "hallgatouzenet"
 
     def __str__(self):
         return str(self.uzenet)

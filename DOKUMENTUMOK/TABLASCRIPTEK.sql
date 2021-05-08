@@ -188,6 +188,47 @@ CREATE TABLE kurzustfelvesz(
 );
 
 
+CREATE table tema(
+    nev VARCHAR(200) not null,
+    CONSTRAINT temaNev_pk PRIMARY KEY (nev)
+);
+
+
+CREATE table oktatouzenet(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    uzenet VARCHAR(2000),
+    datum TIMESTAMP not null,
+    tema VARCHAR(200),
+    oktatoAzonosito VARCHAR(6),
+    CONSTRAINT oktatoTema_fk FOREIGN KEY (tema) REFERENCES tema(nev) ON DELETE CASCADE,
+    CONSTRAINT oktatoUzenetAzonosito_fk FOREIGN KEY (oktatoAzonosito) REFERENCES oktato(azonosito) ON DELETE CASCADE
+);
+
+CREATE table hallgatouzenet(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    uzenet VARCHAR(2000),
+    datum TIMESTAMP not null,
+    tema VARCHAR(200),
+    hallgatoAzonosito VARCHAR(6),
+    CONSTRAINT hallgatoTema_fk FOREIGN KEY (tema) REFERENCES tema(nev) ON DELETE CASCADE,
+    CONSTRAINT hallgatoUzenetAzonosito_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
+);
+
+
+create table infosheet(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    cim VARCHAR(200) not null,
+    uzenet VARCHAR(2000) not null,
+    CONSTRAINT info_pk PRIMARY KEY (id)
+);
+
+
+create table uzenofal(
+    id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+    cim VARCHAR(200) not null,
+    uzenet VARCHAR(2000) not null,
+    CONSTRAINT uzenofal_pk PRIMARY KEY (id)
+);
 
 CREATE or REPLACE TRIGGER make_osztondij
 AFTER INSERT ON hallgato

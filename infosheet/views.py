@@ -74,9 +74,3 @@ def infosheet_view(request):
         return render(request, "infosheet_view.html", context)
     else:
         return redirect("../teszt/")
-
-    context = {
-        "obj": user,
-        "role" : role
-    }
-    return render(request, "infosheet_view.html", context)

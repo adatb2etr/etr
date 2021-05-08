@@ -1,11 +1,11 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 
 class Info(models.Model):
 
     id = models.AutoField(primary_key=True, db_column="id", default=0)
-    cim = models.CharField(max_length=20, null=False)
+    cim = models.CharField(max_length=200, null=False)
     uzenet = models.CharField(max_length=50, null=False)
     
     class Meta:

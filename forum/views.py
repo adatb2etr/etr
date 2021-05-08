@@ -23,9 +23,12 @@ def sajat_forum_view(request):
     role = getRole(request.user)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
-        queryset_o = OktatoUzenet.objects.get()
-        queryset_h = HallgatoUzenet.objects.get()
-        queryset = list(chain(queryset_h, queryset_o))
+        try:
+            queryset_o = OktatoUzenet.objects.get()
+            queryset_h = HallgatoUzenet.objects.get()
+            queryset = list(chain(queryset_h, queryset_o))
+        except:
+            queryset = []
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
             form.save()
