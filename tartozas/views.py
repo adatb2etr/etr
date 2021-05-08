@@ -8,7 +8,6 @@ from django.shortcuts import render
 
 
 def tartozas_create_view(request):
-
     if is_EtrAdmin(request):
         if is_EtrAdmin(request) is True:
             form = TartozasForm(request.POST or None)
@@ -30,10 +29,9 @@ def tartozas_update_view(request, hallgatoAzonosito):
         if form.is_valid():
             hallgatoID = obj.hallgatoAzonosito
             tartozasOsszege = int(obj.tartozasosszeg)
-            ujEgyenleg = tartozasOsszege - (int(form.data['befizetesOsszege']))
 
             obj.delete()
-            Tartozas.objects.create(hallgatoAzonosito=hallgatoID, tartozasosszeg=ujEgyenleg)
+            Tartozas.objects.create(hallgatoAzonosito=hallgatoID, tartozasosszeg=tartozasOsszege)
 
 
             return redirect("../../../tartozasok/")
@@ -42,7 +40,7 @@ def tartozas_update_view(request, hallgatoAzonosito):
         }
         return render(request, "tartozas_creation.html", context)
 
-def tartzoas_lookup_view(request, hallgatoAzonosito):
+def tartozas_lookup_view(request, hallgatoAzonosito):
     obj = get_object_or_404(Tartozas, hallgatoAzonosito=hallgatoAzonosito)
 
     context = {
@@ -64,9 +62,13 @@ def tartozas_delete_view(request, hallgatoAzonosito):
 
 def tartozas_list_view(request):
     queryset = Tartozas.objects.all()  #list of objects
-
+    form = TartozasForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        form = TartozasForm()
     context = {
-        "object_list": queryset
+        "object_list": queryset,
+        "form": form
     }
     return render(request, "tartozas_list.html", context)
 

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../teljesitesfeltetelek/create"><h3>Új teljesítésfelvétel felvétele</h3></a>
+    <table>
+        <tr>
+            <th> ID </th>
+            <th>Képzés Azonosítója</th>
+            <th>Kurzus Azonosítója</th>
+        </tr>
+    {% for instance in object_list %}
+            <tr>
+            <td> <a href="{{ instance.get_absolute_url }}"> {{ instance.id }}</a></td>
+            <td> <a href="{{ instance.kepzesId.get_absolute_url }}">{{ instance.kepzesId.kepzesid }}</a> </td>
+            <td> <a href="{{ instance.kurzusKod.get_absolute_url }}">{{ instance.kurzusKod.kurzuskod }} </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

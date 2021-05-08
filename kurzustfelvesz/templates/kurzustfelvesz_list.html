@@ -8,6 +8,7 @@
            <th>Hallgató Azonosító</th>
             <th>Kurzus Kód</th>
             <th>Kredit</th>
+            <th>Évszám</th>
             <th>Teljesítette</th>
         </tr>
     {% for instance in object_list %}
@@ -16,6 +17,7 @@
             <td> <a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito.azonosito }} </a></td>
             <td> <a href="{{ instance.kurzusKod.get_absolute_url }}">{{ instance.kurzusKod.kurzuskod }}</a>  </td>
             <td> {{ instance.kurzusKod.kredit }}</td>
+            <td> {{ instance.evszam }}</td>
             <td> {{ instance.teljesitette }} </td>
             </tr>
         {% endfor %}

@@ -5,9 +5,9 @@ from .models import Kurzus
 
 class KurzusForm(forms.ModelForm):
 
-    kurzuskod = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Kurzus Kódja"}))
-    kurzusnev = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Kurzus Neve"}))
-    kredit = forms.IntegerField(widget=forms.TextInput(attrs={"placeholder": "Kredit Értéke"}))
+    kurzuskod = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Kurzus kódja"}))
+    kurzusnev = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "Kurzus neve"}))
+    kredit = forms.IntegerField(widget=forms.TextInput(attrs={"placeholder": "Kredit értéke"}))
     teremCim = TeremForm()
     oktatoAzonosito = FelhasznaloForm()
 

@@ -1,0 +1,22 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <th>Infosheet</th>
+            <td></td>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td>{{ instance.cim }}</td>
+                <td>{{ instance.uzenet }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if role == "hallgato" %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary login-button">Küldés</button>
+    {% endif %}
+{% endblock %}

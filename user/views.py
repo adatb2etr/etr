@@ -3,6 +3,8 @@ import hashlib
 from django.shortcuts import render, get_object_or_404, redirect
 from user.forms import FelhasznaloForm, EtrAdminForm
 from user.models import EtrAdmin, Oktato, Hallgato
+from kurzus.models import Kurzus
+from kurzustfelvesz.models import Kurzustfelvesz
 from user.forms import *
 from user.validators.validators import is_EtrAdmin, is_Hallgato, is_Oktato
 from django.contrib.auth.models import User
@@ -128,8 +130,8 @@ def felhasznalok_delete_view(request, UserAzonosito):
 
 # /me
 def sajat_detail_view(request):
-    print(request.user)
     role = getRole(request.user)
+    print(role)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
         return redirect("../kurzusok/")

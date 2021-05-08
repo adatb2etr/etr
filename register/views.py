@@ -15,7 +15,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 # /registeradmin/
 def register(response):
-    if True:#is_EtrAdmin(response) is True:
+    if True:#is_EtrAdmin(response) is True:    
         if response.method == "POST":
             form = EtrAdminForm(response.POST)
             if form.is_valid():
@@ -37,9 +37,8 @@ def register(response):
                     print(f"\n\n\n\nRossz a 2 jelszó!\n\n\n\n")
         else:
             form = EtrAdminForm()
-        return render(response, "register/registerAdmin.html", {"form": form})
-    else:
-        return redirect("/")
+    return render(response, "register/registerAdmin.html", {"form": form})
+
 
 
 # /register/
@@ -110,8 +109,7 @@ def registerFelhasznalo(response):
 
                         print(f"\n\n\nA hallgató ID-ja: {id}\n\n\n")
 
-                        Tartozas.objects.create(hallgatoAzonosito_id=id)
-                        Osztondij.objects.create(hallgatoAzonosito_id=id)
+
                 else:
                     print(f"\n\n\n\nHiba!\n\n\n\n")
 

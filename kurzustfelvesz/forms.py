@@ -8,10 +8,12 @@ class KurzustFelveszForm(forms.ModelForm):
 
     hallgatoAzonosito = FelhasznaloForm()
     kurzusKod = KurzusForm()
+    evszam = forms.IntegerField
 
     class Meta:
         model = Kurzustfelvesz
         fields = [
             'hallgatoAzonosito',
             'kurzusKod',
+            'evszam',
         ]

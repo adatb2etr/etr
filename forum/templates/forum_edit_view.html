@@ -1,0 +1,37 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+    <div class="login-section card-footer">
+        <form method="POST", class="form-group">
+            <h1 class="title">Szerkesztés</h1>
+            {% csrf_token %}
+            <div class="row jutify-content-center" id="login-card">
+                {{ form }}
+                <button type="submit" class="btn btn-primary login-button">Mentés</button>
+            </div>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <th>Fórum</th>
+            <td></td>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td>név {{ obj.azonosito }}</td>
+                <td>üzenet {{ obj.azonosito }}</td>
+            </tr>
+            <div class="buttons">
+            {% if  role  == "admin" %}
+                <button type="button" class="btn btn-primary"><a href="../forum/{{ obj.azonosito }}/delete/">Törlés</a></button>
+            {% endif %}
+                <button type="button" class="btn btn-primary"><a href="../forum/{{ obj.azonosito }}/edit/">Szerkesztés</a></button>
+            </div>
+            {% endfor %}
+        </tbody>
+        <div class="buttons">
+            <button type="button" class="btn btn-primary"><a href="../forum/{{ obj.azonosito }}/add/">Hozzászólás</a></button>
+        </div>
+    </table>
+{% endblock %}

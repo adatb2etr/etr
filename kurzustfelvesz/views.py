@@ -29,10 +29,10 @@ def get_teljesitett_elofeltetelek(kurzuskod, hallgatoAzonosito):
 def meghirdetve(kurzuskod):
     try:
         tantargy = Kurzus.objects.get(kurzuskod=kurzuskod)
-        if tantargy.oktatoAzonosito is None:
-            return False
-        else:
+        if tantargy.oktatoAzonosito is not None and tantargy.meghirdetett == 1:
             return True
+        else:
+            return False
     except:
         print("\n\n\n dassaddsa \n\n\n")
         return False

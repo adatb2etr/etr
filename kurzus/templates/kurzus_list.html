@@ -8,7 +8,10 @@
             <th>Kreditszám</th>
             <th>Terem száma</th>
             <th>Oktató azonosítója</th>
+            <th></th>
+            {% if role == "oktato" %}
             <td></td>
+            {% endif %}
         </thead>
         <tbody>
             {% for instance in object_list %}
@@ -18,12 +21,22 @@
                 <td> {{ instance.kredit }}  </td>
                 <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
                 <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
-                <td> <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele">Felvétel</button> </td>
+                <td>{% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null %}
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.kurzuskod }}/add">Felvétel</a></button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled><a>Nem lehetséges a felvétel</a></button>
+                    {% endif %}
+                </td>
+                {% if role == "oktato" and instance.meghirdetett != 0 and instance.oktatoAzonosito == azonosito %}
+                <td><button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.kurzuskod }}/denied">Letiltás</a></button></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../kurzusok/create">Új kurzus felvétele</a></button>
+    {% if role == "oktato" %}
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/create">Új kurzus felvétele</a></button>
+    {% endif %}
     <!--<table style="margin-left: 30px; size: 900px; font-size: 25px">
         <tr>
            <th>Kurzus Kódja</th>

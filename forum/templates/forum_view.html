@@ -1,0 +1,47 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <th><h1>Fórum</h1></th>
+            <th>Dátum</th>
+            <th>Téma</th>
+            <th>Feladó</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td>{{ instance.uzenet }}</td>
+                <td>{{ instance.datum }}</td>
+                <td>{{ instance.tema }}</td>
+                <td>{{ instance.userId }}</td>                
+                <td>
+                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/add/">Hozzászólás</a></button></td>
+                <td>{% if instance.userId == user %}
+                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/edit/">Szerkesztés</a></button>
+                    {% endif %}
+                    {% if  role  == "admin" or instance.userId == user %}
+                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }/delete/">Törlés</a></button>
+                    {% endif %}
+                </td>
+            </tr>
+            <div class="buttons">
+
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="login-section card-footer">
+        <form method="POST", class="form-group">
+            <h1 class="title">Hozzászólás</h1>
+            {% csrf_token %}
+            <div class="row jutify-content-center" id="login-card">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary login-button">Küldés</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

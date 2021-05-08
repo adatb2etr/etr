@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br><br>
+    <table style="margin-left: 30px; size: 600px; font-size: 42px">
+        <tr>
+            <th>Képzés Azonosítója</th>
+            <th>Kurzus Azonosítója</th>
+        </tr>
+        <tr>
+            <td> <a href="{{ obj.kepzesId.get_absolute_url }}">{{ obj.kepzesId.kepzesid }}</a> </td>
+            <td> <a href="{{ obj.kurzusKod.get_absolute_url }}">{{ obj.kurzusKod.kurzuskod }} </a></td>
+        </tr>
+    </table>
+
+     <p style="font-size: 42px"> <a href="update/"> Szerkesztés</a>
+       <a href="delete/">Törlés</a>
+     <a href="../">Vissza</a>
+     </p>
+{% endblock %}

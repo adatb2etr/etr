@@ -1,0 +1,15 @@
+INSERT INTO terem VALUES ('2.emelet 204 Terem', 20);
+INSERT INTO terem VALUES ('2.emelet 201 Terem', 30);
+INSERT INTO terem VALUES ('2.emelet 205 Terem', 70);
+INSERT INTO terem VALUES ('3.emelet 303 Terem', 600);
+INSERT INTO terem VALUES ('3.emelet 301 Terem', 50);
+INSERT INTO terem VALUES ('3.emelet 305 Terem', 30);
+INSERT INTO terem VALUES ('3.emelet 302 Terem', 50);
+INSERT INTO terem VALUES ('3.emelet 304 Terem', 50);
+INSERT INTO terem VALUES ('2.emelet 203 Terem', 70);
+INSERT INTO terem VALUES ('1.emelet 102 Terem', 30);
+INSERT INTO terem VALUES ('1.emelet 103 Terem', 70);
+INSERT INTO terem VALUES ('1.emelet 104 Terem', 70);
+INSERT INTO terem VALUES ('1.emelet 105 Terem', 30);
+INSERT INTO terem VALUES ('2.emelet 202 Terem', 20);
+INSERT INTO terem VALUES ('1.emelet 101 Terem', 20);

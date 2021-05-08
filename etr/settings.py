@@ -54,6 +54,14 @@ INSTALLED_APPS = [
     'osztondij',
     'vizsga',
     'vizsgazik',
+    'register.GENERATORS',
+    'kepzes',
+    'felvette',
+    'teljesitesfeltetel',
+    'befizetes',
+    'forum',
+    'infosheet',
+    'uzenofal'
 ]
 
 MIDDLEWARE = [
@@ -89,17 +97,18 @@ WSGI_APPLICATION = 'etr.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.oracle',
-#        'NAME': 'xe',
-#        'USER': 'system',
-#        'PASSWORD': 'oracle',
-#        'HOST': 'localhost',
-#        'PORT': '1521',
-#    }
-#}
+"""
+DATABASES = {
+    'default': {
+       'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'xe',
+        'USER': 'system',
+        'PASSWORD': 'oracle',
+        'HOST': 'localhost',
+        'PORT': '1521',
+    }
+}
+"""
 
 DATABASES = {
     'default': {

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="../../kepzesek/create"><h3>Új Képzés felvétele</h3></a>
+    <table>
+        <tr>
+            <th>Képzés Azonosítója</th>
+            <th>Képzés Neve</th>
+        </tr>
+
+    {% for instance in object_list %}
+            <tr>
+             <td><a href="{{ instance.get_absolute_url }}">{{ instance.kepzesid }}</a></td>
+            <td>{{ instance.nev }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

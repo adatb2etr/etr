@@ -32,9 +32,18 @@
                 Menü
               </button>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="{{ HTTP_HOST }}/kurzusok/">Kurzusok</a>
+                {% if role == "hallgato"%}
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/me/">Adataim</a>
+                {% endif %}
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/me/kurzusok">Kurzusok</a>
                 <a class="dropdown-item" href="{{ HTTP_HOST }}/vizsgak/">Vizsgák</a>
+                {% if role != "hallgato"%}
                 <a class="dropdown-item" href="{{ HTTP_HOST }}/termek/">Termek</a>
+                {% endif %}
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/tartozasok/">Tartozások</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/forum/">Fórum</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/uzenofal/">Üzenőfal</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/infosheet/">Infosheet</a>
               </div>
             </div>
             <a href="/"><img src="{% static 'etr/images/neptun_logo.png' %}" id="logo_logged_in" alt="Logo"></a>

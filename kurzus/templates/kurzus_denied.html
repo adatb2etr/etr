@@ -1,0 +1,10 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+
+    <form action=".", method="POST">{% csrf_token %}
+    <h1>Biztos szeretnéd letiltani a jelentkezést erre a kurzusra?</h1>
+    <p><input type="submit", value="Igen"/>   <a href="../../../kurzusok/">Kilépés</a></p>
+    </form>
+
+{% endblock %}

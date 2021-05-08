@@ -26,6 +26,13 @@ from tartozas.views import *
 from osztondij.views import *
 from vizsga.views import *
 from vizsgazik.views import *
+from kepzes.views import *
+from felvette.views import *
+from teljesitesfeltetel.views import *
+from befizetes.views import *
+from forum.views import *
+from infosheet.views import *
+from uzenofal.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,13 +42,22 @@ urlpatterns = [
     path('', v.loginPage, name="login"),
     path('logout/',v.logoutPage, name='logout'),
 
-
     path('felhasznalok/', felhasznalok_list_view, name="FelhasznalokList"),    #oktatok_list_view függvényt használja
     path('felhasznalok/<str:UserAzonosito>/', felhasznalok_lookup_view, name="FelhasznaloView"),   #OktatokView  -  models.py-ban lévő reverse függénynél használjuk, ezzel kapjuk meg az oktato_azonosítót és ezzel hívja meg a oktato_lookup_view -t.
     path('felhasznalok/<str:UserAzonosito>/update/',felhasznalok_update_view, name="FelhasznaloUpdateView"),
     path('felhasznalok/<str:UserAzonosito>/delete/', felhasznalok_delete_view, name="FelhasznaloDeleteView"),
     path('me/', sajat_detail_view, name="Me"),
     path('me/kurzusok', sajat_kurzus_view, name="Kurzusaim"),
+
+    path('forum/', sajat_forum_view, name="Forum"),
+    path('forum/<str:id>/edit/', forum_edit_view, name='forum-edit'),
+    path('forum/<str:id>/delete/', forum_delete_view, name='forum-delete'),
+
+    path('infosheet/', infosheet_view, name="Infosheet"),
+
+    path('uzenofal/', uzenofal_view, name="Uzenofal"),
+    path('uzenofal/<str:id>/delete/', uzenofal_delete_view, name='uzenofal-delete'),
+    path('uzenofal/add/', uzenofal_create_view, name='uzenofal-add'),
 
     path('termek/create/', terem_create_view, name ='terem-create'),
     path('termek/<str:terem_cim>/', terem_lookup_view, name='terem-detail'),
@@ -51,8 +67,10 @@ urlpatterns = [
 
     path('kurzusok/create/', kurzus_create_view, name ='kurzus-create'),
     path('kurzusok/<str:kurzus_kod>/', kurzus_lookup_view, name='kurzus-detail'),
+    path('kurzusok/<str:kurzus_kod>/add/', kurzus_add_view, name='kurzus-add'),
     path('kurzusok/<str:kurzus_kod>/update/', kurzus_update_view, name='kurzus-update'),
     path('kurzusok/<str:kurzus_kod>/delete/', kurzus_delete_view, name='kurzus-delete'),
+    path('kurzusok/<str:kurzus_kod>/denied/', kurzus_denied_view, name='kurzus-denied'),
     path('kurzusok/', kurzus_list_view, name='Kurzus lista'),
 
     path('elofeltetelek/create/', elofeltetel_create_view, name ='elofeltetel-create'),
@@ -74,7 +92,7 @@ urlpatterns = [
     path('kurzusokatfelvesz/', kurzustfelvesz_list_view, name='Kurzustfelvesz lista'),
 
     path('tartozasok/create/', tartozas_create_view, name='tartozas-create'),
-    path('tartozasok/<str:hallgatoAzonosito>/', tartzoas_lookup_view, name='tartozas-detail'),
+    path('tartozasok/<str:hallgatoAzonosito>/', tartozas_lookup_view, name='tartozas-detail'),
     path('tartozasok/<str:hallgatoAzonosito>/update/', tartozas_update_view, name='tartozas-update'),
     path('tartozasok/<str:hallgatoAzonosito>/delete/', tartozas_delete_view, name='tartozas-delete'),
     path('tartozasok/', tartozas_list_view, name='Tartozas lista'),
@@ -96,5 +114,29 @@ urlpatterns = [
     path('vizsgazik/<int:vizsgazikID>/update/', vizsgazik_update_view, name='vizsgazik-update'),
     path('vizsgazik/<int:vizsgazikID>/delete/', vizsgazik_delete_view, name='vizsgazik-delete'),
     path('vizsgazik/', vizsgazik_list_view, name='Vizsgazik lista'),
+
+    path('kepzesek/create/', kepzes_create_view, name='kepzes-create'),
+    path('kepzesek/<str:kepzesid>/', kepzes_lookup_view, name='kepzes-detail'),
+    path('kepzesek/<str:kepzesid>/update/', kepzes_update_view, name='kepzes-update'),
+    path('kepzesek/<str:kepzesid>/delete/', kepzes_delete_view, name='kepzes-delete'),
+    path('kepzesek/', kepzes_list_view, name='Kepzes lista'),
+
+    path('felvette/create/', felvette_create_view, name='felvette-create'),
+    path('felvette/<int:felvetteID>/', felvette_lookup_view, name='felvette-detail'),
+    path('felvette/<int:felvetteID>/update/', felvette_update_view, name='felvette-update'),
+    path('felvette/<int:felvetteID>/delete/', felvette_delete_view, name='felvette-delete'),
+    path('felvette/', felvette_list_view, name='Felvette lista'),
+
+    path('teljesitesfeltetelek/create/', teljesitesfeltetel_create_view, name='teljesitesfeltetel-create'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/', teljesitesfeltetel_lookup_view, name='teljesitesfeltetel-detail'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/update/', teljesitesfeltetel_update_view, name='teljesitesfeltetel-update'),
+    path('teljesitesfeltetelek/<int:teljesitesfeltetelID>/delete/', teljesitesfeltetel_delete_view, name='teljesitesfeltetel-delete'),
+    path('teljesitesfeltetelek/', teljesitesfeltetel_list_view, name='Teljesitesfeltetel lista'),
+
+    path('befizetesek/create/', befizetes_create_view, name='befizetes-create'),
+    path('befizetesek/<int:befizetesID>/', befizetes_lookup_view, name='befizetes-detail'),
+    path('befizetesek/<int:befizetesID>/update/', befizetes_update_view, name='befizetes-update'),
+    path('befizetesek/<int:befizetesID>/delete/', befizetes_delete_view, name='befizetes-delete'),
+    path('befizetesek/', befizetes_list_view, name='Befizetes lista'),
 
 ]

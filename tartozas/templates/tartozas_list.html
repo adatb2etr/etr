@@ -1,7 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <a href="../../tartozasok/create"><h3>Új Tartozás felvétele</h3></a>
+
+    <table class="table">
+        <thead>
+            <th>Hallgató azonosítója</th>
+            <th>Hallgató neve</th>
+            <th>Tartozás összege</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td><a href="{{ instance.hallgatoAzonosito.get_absolute_url }}">{{ instance.hallgatoAzonosito.azonosito }}</a></td>
+                <td>{{ instance.hallgatoAzonosito.vezeteknev }} {{ instance.hallgatoAzonosito.keresztnev }}</td>
+                <td> <a href ="{{ instance.get_absolute_url }}">{{ instance.tartozasosszeg }}</a></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.hallgatoAzonosito.get_absolute_url }}/delete">Befizetés</a></button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if role != "hallgato" %}
+    <form action="." method="POST"> {% csrf_token %}
+        {{ form.as_p }}
+        <a href="../">Vissza</a>
+        <input type="submit" value="Save"/>
+    </form>
+    {% endif %}
+    <!--
     <table>
         <tr>
             <th>Hallgató Azonosítója</th>
@@ -16,4 +44,5 @@
             </tr>
         {% endfor %}
     </table>
+    -->
 {% endblock %}

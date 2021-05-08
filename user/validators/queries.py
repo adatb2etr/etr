@@ -58,11 +58,11 @@ def getRole(id):
     except:
         try:
             Oktato.objects.get(azonosito=id)
-            return("oktato")
+            return "oktato"
         except:
             try:
                 Hallgato.objects.get(azonosito=id)
-                return ("hallgato")
+                return "hallgato"
             except:
                 return None
 
