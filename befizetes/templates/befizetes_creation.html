@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if role == "admin" %}
 <form action="." method="POST"> {% csrf_token %}
     {{ obj.as_p }}
     <a href="../">Vissza</a>
     <input type="submit" value="Save"/>
 </form>
+    {% endif %}
+    {% if role == "hallgato" %}
+
+        <form method="POST"> {% csrf_token %}
+                    <fieldset id="befizetesForm">
+
+                        <legend>Befizetés</legend>
+                        <label for="befizetesosszege">Befizetés</label>
+                        <input type ="number" id="befizetesosszege" name="befizetesosszege">
+
+                        <button type="submit" class="btn btn-success">befizetés</button>
+                    </fieldset>
+                </form>
+    {% endif %}
 {% endblock %}

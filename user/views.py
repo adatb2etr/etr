@@ -136,7 +136,6 @@ def sajat_detail_view(request):
     print(role)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
-        return redirect("../kurzusok/")
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
     elif role == "hallgato":

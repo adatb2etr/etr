@@ -2,35 +2,35 @@ from django.shortcuts import render, get_object_or_404
 from .forms import BefizetesForm, BefizetesFormUpdate
 from .models import Befizetes
 from tartozas.models import Tartozas
-from user.validators.validators import is_EtrAdmin
+from user.validators.validators import is_EtrAdmin, is_Hallgato
 from django.shortcuts import redirect
 from django.shortcuts import render
-
+from user.models import Hallgato
 
 
 def befizetes_create_view(request):
 
     if is_EtrAdmin(request):
-        if is_EtrAdmin(request) is True:
-            form = BefizetesForm(request.POST or None)
-            if form.is_valid():
+        form = BefizetesForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            form = BefizetesForm()
 
-                tartozasObj = Tartozas.objects.get(hallgatoAzonosito__azonosito=form.data['hallgatoAzonosito'])
-                tartozasAzonosito = tartozasObj.hallgatoAzonosito
-                ujtartozasosszeg = tartozasObj.tartozasosszeg - int(form.data['befizetesosszeg'])
+        context = {
+            'obj' : form,
+            'role': 'admin'
+        }
+        return render(request, 'befizetes_creation.html', context)
+    elif is_Hallgato(request):
+        try:
+            Befizetes.objects.create(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user), befizetesosszeg=int(request.POST.get('befizetesosszege')))
+        except:
+            pass
 
-                tartozasObj.delete()
-                Tartozas.objects.create(tartozasosszeg=ujtartozasosszeg, hallgatoAzonosito=tartozasAzonosito)
-
-
-                form.save()
-                form = BefizetesForm()
-
-            context = {
-                'obj' : form
-            }
-
-            return render(request, 'befizetes_creation.html', context)
+        context = {
+            "role": "hallgato"
+        }
+        return render(request, 'befizetes_creation.html', context)
 
 
 def befizetes_update_view(request, befizetesID):

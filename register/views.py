@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
 from user.validators.queries import getids
 from django.shortcuts import redirect
+from user.validators.queries import getRole
 from tartozas.admin import Tartozas
 from osztondij.models import Osztondij
 import random, string

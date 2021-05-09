@@ -7,14 +7,12 @@ class BefizetesForm(forms.ModelForm):
 
     hallgatoAzonosito = FelhasznaloForm()
     befizetesosszeg = forms.IntegerField(widget=forms.TextInput(attrs={"placeholder": "Befizetés Összege"}))
-    datum = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M:%S'])
 
     class Meta:
         model = Befizetes
         fields = [
             'hallgatoAzonosito',
             'befizetesosszeg',
-            'datum',
         ]
 
 

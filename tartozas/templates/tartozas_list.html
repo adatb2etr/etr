@@ -16,7 +16,7 @@
                 <td>{{ instance.hallgatoAzonosito.vezeteknev }} {{ instance.hallgatoAzonosito.keresztnev }}</td>
                 <td> <a href ="{{ instance.get_absolute_url }}">{{ instance.tartozasosszeg }}</a></td>
                 <td>
-                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.hallgatoAzonosito.get_absolute_url }}/delete">Befizetés</a></button>
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../../befizetesek/create">Befizetés</a></button>
                 </td>
             </tr>
             {% endfor %}

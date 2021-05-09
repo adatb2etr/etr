@@ -4,6 +4,7 @@ from .models import Tartozas
 from user.validators.validators import is_EtrAdmin
 from django.shortcuts import redirect
 from django.shortcuts import render
+from user.validators.queries import getRole
 
 
 
@@ -61,14 +62,20 @@ def tartozas_delete_view(request, hallgatoAzonosito):
 
 
 def tartozas_list_view(request):
-    queryset = Tartozas.objects.all()  #list of objects
+    role = getRole(request.user)
+    queryset = None
+    if role == "admin":
+        queryset = Tartozas.objects.all()  #list of objects
+    elif role == "hallgato":
+        queryset = Tartozas.objects.filter(hallgatoAzonosito__azonosito=request.user)
     form = TartozasForm(request.POST or None)
     if form.is_valid():
         form.save()
         form = TartozasForm()
     context = {
         "object_list": queryset,
-        "form": form
+        "form": form,
+        "role": role
     }
     return render(request, "tartozas_list.html", context)
 
