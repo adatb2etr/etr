@@ -65,13 +65,13 @@ def vizsga_delete_view(request, vizsgaID):
 def vizsga_list_view(request):
     queryset = Vizsga.objects.all()  #list of objects
     kodok = Vizsga.objects.all().values_list("vizsgaID", flat=True)
-    felvettVizsgaAzonosito = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("vizsgaID", flat=True))
-    felvettVizsgaTeljesitette = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("erdemjegy", flat=True))
+    felvettVizsgaAzonosito = list(Vizsgazik.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("vizsgaID", flat=True))
+    felvettVizsgaTeljesitette = list(Vizsgazik.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("kapottjegy", flat=True))
     felvettVizsga = Vizsga.objects.filter(vizsgaID__in=felvettVizsgaAzonosito)
     
     felvettVizsga = zip(felvettVizsga, felvettVizsgaTeljesitette)
     
-    felvett = VizsgatFelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user))
+    felvett = Vizsgazik.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user))
     context = {
         "object_list": queryset,
         "felvettkodok": felvettVizsgaAzonosito,
@@ -79,17 +79,14 @@ def vizsga_list_view(request):
     return render(request, "vizsga_list.html", context)
 
 def vizsga_add_view(request, vizsgaID):
-    queryset = Vizsga.objects.all()  #list of objects
     role = getRole(request.user)
-    user = request.user
+    vizsga = Vizsga.objects.get(vizsgaID=vizsgaID)
+
     if role == "hallgato":
-        obj = get_object_or_404(Vizsga, vizsgaID=vizsgaID)
-        print(obj)
-        VizsgatFelvesz(vizsgaID=Vizsga.objects.get(vizsgaID=vizsgaID), hallgatoAzonosito=Hallgato.objects.get(azonosito=user), erdemjegy=0, evszam=2021).save()
-        return redirect("../../../vizsgak/")
-    context = {
-        "object_list": queryset
-    }
+        hallgato = Hallgato.objects.get(azonosito=request.user)
+        szamlalo = len(Vizsgazik.objects.filter(vizsgaID__kurzusKod=vizsga.kurzusKod, hallgatoAzonosito=hallgato))
+        
+        Vizsgazik.objects.create(vizsgaID=vizsga, hallgatoAzonosito=hallgato, kapottjegy=0, vizsgaalkalom=szamlalo+1)
     return redirect("../../../vizsgak/")
 
 def dictfetchall(cursor):

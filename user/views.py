@@ -6,7 +6,7 @@ from user.models import EtrAdmin, Oktato, Hallgato
 from kurzus.models import Kurzus
 from kurzustfelvesz.models import Kurzustfelvesz
 from vizsga.models import Vizsga
-from vizsgatfelvesz.models import VizsgatFelvesz
+from vizsgazik.models import Vizsgazik
 from user.forms import *
 from user.validators.validators import is_EtrAdmin, is_Hallgato, is_Oktato
 from django.contrib.auth.models import User
@@ -197,8 +197,8 @@ def sajat_vizsga_view(request):
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
         vizsgak = Vizsga.objects.all()
-        felvettVizsgakAzonosito = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=user).values_list("vizsgaID", flat=True))
-        felvettVizsgakTeljesitette = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=user).values_list("erdemjegy", flat=True))
+        felvettVizsgakAzonosito = list(Vizsgazik.objects.filter(hallgatoAzonosito=user).values_list("vizsgaID", flat=True))
+        felvettVizsgakTeljesitette = list(Vizsgazik.objects.filter(hallgatoAzonosito=user).values_list("kapottjegy", flat=True))
         felvettVizsgak = Vizsga.objects.filter(vizsgaID__in=felvettVizsgakAzonosito)
 
         felvettVizsgak = zip(felvettVizsgak, felvettVizsgakTeljesitette)
