@@ -14,6 +14,7 @@ from django.contrib.auth.hashers import make_password
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from django.http import HttpResponse
 import sys
+from statistics import mean
 
 
 def felhasznalok_list_view(request):
@@ -140,12 +141,27 @@ def sajat_detail_view(request):
         user = Oktato.objects.get(azonosito=request.user)
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
+
+        vizsgak = Vizsgazik.objects.filter(kapottjegy__gt=1, hallgatoAzonosito=user)
+
+        evszamok = set()
+        for x in vizsgak:
+            evszamok.add(x.vizsgaID.idopont.year)
+
+        kkiDict = dict()
+        for evszam in evszamok:
+             kkiDict[evszam] = mean((list(Vizsgazik.objects.values_list('kapottjegy', flat=True).filter(kapottjegy__gt=1, hallgatoAzonosito=user, vizsgaID__idopont__year=evszam))))
+
+        print(kkiDict)
+
+
     else:
         return redirect("../teszt/")
 
     context = {
         "obj": user,
-        "role" : role
+        "role" : role,
+        'kkiDict' : kkiDict
     }
     return render(request, "felhasznalok/sajat_detail.html", context)
 

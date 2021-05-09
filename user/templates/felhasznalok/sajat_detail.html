@@ -35,6 +35,15 @@
                 <th>Email:</th>
                 <td>{{ obj.email }}</td>
             </tr>
+
+            <tr>
+                <th>Éves Átlagok:</th>
+                    <td>
+                {% for kkiKey, kkiValue in kkiDict.items %}
+                    <pre> {{ kkiKey }}: {{ kkiValue }}</pre>
+                {% endfor %}
+                    </td>
+            </tr>
         </tbody>
     </table>
     <div class="buttons">

@@ -85,7 +85,7 @@ def vizsga_add_view(request, vizsgaID):
     if role == "hallgato":
         hallgato = Hallgato.objects.get(azonosito=request.user)
         szamlalo = len(Vizsgazik.objects.filter(vizsgaID__kurzusKod=vizsga.kurzusKod, hallgatoAzonosito=hallgato))
-        
+
         Vizsgazik.objects.create(vizsgaID=vizsga, hallgatoAzonosito=hallgato, kapottjegy=0, vizsgaalkalom=szamlalo+1)
     return redirect("../../../vizsgak/")
 
