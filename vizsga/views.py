@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView
+
 from .forms import VizsgaForm
 from .models import Vizsga
 from user.validators.validators import is_EtrAdmin
 from django.shortcuts import redirect
 from django.shortcuts import render
-
+from vizsgazik.models import Vizsgazik
+from django.db import connection
 
 
 def vizsga_create_view(request):
@@ -64,3 +67,41 @@ def vizsga_list_view(request):
     }
     return render(request, "vizsga_list.html", context)
 
+
+
+
+
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
+
+
+
+class VizsgaStatChartView(TemplateView):
+    template_name = 'vizsgaStat.html'
+
+    cursor = connection.cursor()
+    cursor.execute(
+        "SELECT round(avg(vizsgazik.kapottJegy), 2), vizsga.kurzusKod from vizsgazik, vizsga where vizsga.vizsgaID = vizsgazik.vizsgaID group by vizsga.kurzusKod;")
+    r = dictfetchall(cursor)
+
+
+    def get_context_data(self, **kwargs):
+        listaAverage = []
+        listaKurzusKod = []
+        context = super().get_context_data(**kwargs)
+        for x in self.r:
+            listaAverage.append(x['ROUND(AVG(VIZSGAZIK.KAPOTTJEGY),2)'])
+            listaKurzusKod.append(x['KURZUSKOD'])
+
+        context["qs2"] = listaAverage
+        context["qs1"] = listaKurzusKod
+
+        return context

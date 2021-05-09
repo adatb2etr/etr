@@ -126,4 +126,7 @@ urlpatterns = [
     path('befizetesek/<int:befizetesID>/delete/', befizetes_delete_view, name='befizetes-delete'),
     path('befizetesek/', befizetes_list_view, name='Befizetes lista'),
 
+    path('idopontok/charts', TeremKihasznaltsagStat.as_view(), name="TeremkihasznaltsagStat"),
+    path('vizsgak/charts', VizsgaStatChartView.as_view(), name="VizsgaStatChartView"),
+
 ]
