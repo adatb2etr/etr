@@ -19,49 +19,55 @@ from .forms import HallgatoCommentForm
 
 # /me/forum
 def sajat_forum_view(request):
-    print(request.user)
     role = getRole(request.user)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
         try:
-            queryset_o = OktatoUzenet.objects.get()
-            queryset_h = HallgatoUzenet.objects.get()
+            queryset_o = OktatoUzenet.objects.order_by('-id')
+            queryset_h = HallgatoUzenet.objects.order_by('-id')
             queryset = list(chain(queryset_h, queryset_o))
         except:
             queryset = []
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
+            form.userId = user
             form.save()
             form = HallgatoCommentForm()
         context = {
+            "obj": user,
             "object_list": queryset,
             "form": form
         }
         return render(request, "forum_view.html", context)
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
-        queryset_o = OktatoUzenet.objects.all()
-        queryset_h = HallgatoUzenet.objects.all()
+        queryset_o = OktatoUzenet.objects.order_by('-id')
+        queryset_h = HallgatoUzenet.objects.order_by('-id')
         queryset = list(chain(queryset_h, queryset_o))
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
+            form.userId = user
             form.save()
             form = HallgatoCommentForm()
         context = {
+            "obj": user,
             "object_list": queryset,
             "form": form
         }
         return render(request, "forum_view.html", context)
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
-        queryset_o = OktatoUzenet.objects.all()
-        queryset_h = HallgatoUzenet.objects.all()
+        queryset_o = OktatoUzenet.objects.order_by('-id')
+        queryset_h = HallgatoUzenet.objects.order_by('-id')
         queryset = list(chain(queryset_h, queryset_o))
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.userId = user
             form.save()
             form = HallgatoCommentForm()
         context = {
+            "obj": user,
             "object_list": queryset,
             "form": form
         }

@@ -24,7 +24,7 @@ def uzenofal_view(request):
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
         try:
-            queryset = Uzenet.objects.all()
+            queryset = Uzenet.objects.order_by('-id')
         except Uzenet.DoesNotExist:
             queryset = [Uzenet("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = UzenofalForm(request.POST or None)
@@ -41,7 +41,7 @@ def uzenofal_view(request):
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)        
         try:
-            queryset = Uzenet.objects.all()
+            queryset = Uzenet.objects.order_by('-id')
         except Uzenet.DoesNotExist:
             queryset = [Uzenet("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = UzenofalForm(request.POST or None)
@@ -58,7 +58,7 @@ def uzenofal_view(request):
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
         try:
-            queryset = Uzenet.objects.all()
+            queryset = Uzenet.objects.order_by('-id')
         except Uzenet.DoesNotExist:
             queryset = [Uzenet("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = UzenofalForm(request.POST or None)

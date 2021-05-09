@@ -1,28 +1,27 @@
 {% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <br><br><br>
-    <table style="margin-left: 30px; size: 600px; font-size: 42px">
-        <tr>
+    <table class="table">
+        <thead>
             <th>Kurzus Kódja</th>
             <th>Kurzus Neve</th>
             <th>Kredit</th>
             <th>Terem Címe</th>
             <th>Oktató Azonosítója</th>
-
-        </tr>
-
-        <tr>
-            <td>{{ obj.kurzuskod }}</td>
-            <td> {{ obj.kurzusnev }}  </td>
-            <td> {{ obj.kredit }}  </td>
-            <td> <a href="{{ obj.teremCim.get_absolute_url }}">{{ obj.teremCim.cim }} </a>  </td>
-            <td> <a href="{{ obj.oktatoAzonosito.get_absolute_url }}">{{ obj.oktatoAzonosito.azonosito }}</a>  </td>
-        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ obj.kurzuskod }}</td>
+                <td> {{ obj.kurzusnev }}  </td>
+                <td> {{ obj.kredit }}  </td>
+                <td> <a href="{{ obj.teremCim.get_absolute_url }}">{{ obj.teremCim.cim }} </a>  </td>
+                <td> <a href="{{ obj.oktatoAzonosito.get_absolute_url }}">{{ obj.oktatoAzonosito.azonosito }}</a>  </td>
+            </tr>
+        </tbody>
     </table>
-
-     <p style="font-size: 42px"> <a href="update/"> Szerkesztés</a>
-       <a href="delete/">Törlés</a>
-     <a href="../">Vissza</a>
-     </p>
+    {% if role != "hallgato" %}
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="update/"> Szerkesztés</a></button>
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="delete/">Törlés</a></button>
+    {% endif %}
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../">Vissza</a></button>
 {% endblock %}

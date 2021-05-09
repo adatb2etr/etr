@@ -1,24 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'base_logged_in.html' %}
 
 {% block content %}
-    <br><br><br>
-    <table style="margin-left: 30px; size: 600px; font-size: 42px">
-        <tr>
+    <table class="table">
+        <thead>
             <th>ID</th>
             <th>Hallgató Azonosító</th>
             <th>Kurzus Kód</th>
             <th>Kredit</th>
             <th>Teljesítette</th>
-        </tr>
-        <tr>
-            <td> <a href="{{ obj.get_absolute_url }}"></a></td>
-            <td> <a href="{{ obj.hallgatoAzonosito.get_absolute_url }}">{{ obj.hallgatoAzonosito.azonosito }} </a></td>
-            <td> <a href="{{ obj.kurzusKod.get_absolute_url }}">{{ obj.kurzusKod.kurzuskod }}</a>  </td>
-            <td> {{ obj.kurzusKod.kredit }}</td>
-            <td> {{ obj.teljesitette }} </td>
-        </tr>
+        </thead>
+        <tbody>
+            {% for instance in object_list %}
+            <tr>
+                <td> <a href="{{ obj.get_absolute_url }}"></a></td>
+                <td> <a href="{{ obj.hallgatoAzonosito.get_absolute_url }}">{{ obj.hallgatoAzonosito.azonosito }} </a></td>
+                <td> <a href="{{ obj.kurzusKod.get_absolute_url }}">{{ obj.kurzusKod.kurzuskod }}</a>  </td>
+                <td> {{ obj.kurzusKod.kredit }}</td>
+                <td> {{ obj.teljesitette }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-
      <p style="font-size: 42px"> <a href="update/"> Szerkesztés</a>
        <a href="delete/">Törlés</a>
      <a href="../">Vissza</a>

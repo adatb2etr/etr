@@ -41,7 +41,7 @@ def meghirdetve(kurzuskod):
 def kurzustfelvesz_create_view(request):
 
     if is_EtrAdmin(request):
-        if is_EtrAdmin(request) is True:
+        if  is_EtrAdmin(request) is True:
             form = KurzustFelveszForm(request.POST or None)
             if form.is_valid():
 

@@ -16,10 +16,16 @@
                 <td> {{ instance.kurzusKod.kurzusnev }} </td>
                 <td> <a href="{{ instance.get_absolute_url }}">{{ instance.idopont }}</a> </td>
                 <td> {{ instance.ferohely }} </td>
-                <td> <button>Felvétel</button> </td>
+                {% if not instance.vizsgaID in felvettkodok %}
+                <td> <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../vizsgak/{{instance.vizsgaID}}/add">Felvétel</button> </td>
+                {% else %}
+                <td> <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled>Felvéve</button> </td>
+                {% endif %}    
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    {% if role == "oktato" %}
     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../vizsgak/create">Új vizsga felvétele</a></button>
+    {% endif %}
 {% endblock %}

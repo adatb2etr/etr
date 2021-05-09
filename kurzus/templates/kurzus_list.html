@@ -17,18 +17,42 @@
             {% for instance in object_list %}
             <tr>
                 <td><a href="{{ instance.get_absolute_url }}"> {{ instance.kurzuskod }}</a></td>
-                <td> {{ instance.kurzusnev }}  </td>
-                <td> {{ instance.kredit }}  </td>
+                <td>
+                    {% if instance.kurzusnev == null %}
+                    N/A
+                    {% else %}
+                    {{ instance.kurzusnev }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if instance.kredit == null %}
+                    N/A
+                    {% else %}
+                    {{ instance.kredit }}
+                    {% endif %}
+                </td>
                 <td> <a href="{{ instance.teremCim.get_absolute_url }}">{{ instance.teremCim.cim }} </a> </td>
-                <td> {{ instance.oktatoAzonosito.azonosito }}  </td>
-                <td>{% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null %}
-                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.kurzuskod }}/add">Felvétel</a></button>
+                <td>
+                    {% if instance.oktatoAzonosito.azonosito == null %}
+                    N/A
+                    {% else %}
+                    {{ instance.oktatoAzonosito.azonosito }}
+                    {% endif %}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}">Részletek</a></button>
+                    {% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null  and not instance.kurzuskod in felvettkodok %}
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}/add">Felvétel</a></button>
+                    {% else %}
+                    {% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null  and instance.kurzuskod in felvettkodok %}
+                    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled><a>Már felvéve</a></button>
                     {% else %}
                     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled><a>Nem lehetséges a felvétel</a></button>
                     {% endif %}
+                    {% endif %}
                 </td>
                 {% if role == "oktato" and instance.meghirdetett != 0 and instance.oktatoAzonosito == azonosito %}
-                <td><button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../../{{ instance.kurzuskod }}/denied">Letiltás</a></button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}/disable">Letiltás</a></button></td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -36,6 +60,9 @@
     </table>
     {% if role == "oktato" %}
     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/create">Új kurzus felvétele</a></button>
+    {% endif %}
+    {% if role == "admin" %}
+    <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/kiosztas">Kurzusok kiosztása</a></button>
     {% endif %}
     <!--<table style="margin-left: 30px; size: 900px; font-size: 25px">
         <tr>

@@ -70,8 +70,7 @@ create table felvette(
     CONSTRAINT kepzesIdFelvette_fk FOREIGN KEY (kepzesId) REFERENCES kepzes(kepzesid) ON DELETE CASCADE
     );
     
-work commit;
-commit work;
+
 
 CREATE TABLE oktato(
     azonosito VARCHAR2(6) not null,
@@ -230,6 +229,7 @@ create table uzenofal(
     CONSTRAINT uzenofal_pk PRIMARY KEY (id)
 );
 
+
 CREATE or REPLACE TRIGGER make_osztondij
 AFTER INSERT ON hallgato
 FOR EACH ROW
@@ -243,6 +243,40 @@ END;
 --- GROUPPOLJA HOGY MELYIK ÉVBE MELYIK TANTÁRGYAT HANYAN VETTÉK FEL
 
 SELECT count(kurzustfelvesz.hallgatoAzonosito), kurzus.kurzuskod, evszam from kurzustfelvesz, kurzus where kurzustfelvesz.kurzusKod = kurzus.kurzuskod group by kurzus.kurzuskod, evszam;
+
+
+
+
+
+
+
+
+-- A vizsgaStatisztikák az adott kurzusokból--
+
+
+SELECT round(avg(vizsgazik.kapottJegy), 2), vizsga.kurzusKod from vizsgazik, vizsga where vizsga.vizsgaID = vizsgazik.vizsgaID group by vizsga.kurzusKod;
+
+
+-- evfolyam statisztika, kene bele annyi, hogy ha harmadszor ment át/bukott akk ne szamolja az elozo 2 bukast, mer atment--
+
+select count( distinct kurzustfelvesz.hallgatoAzonosito),vizsgazik.kapottjegy, kurzus.kurzusnev, evszam
+from kurzustfelvesz, vizsgazik, vizsga, kurzus 
+where vizsgazik.vizsgaid = vizsga.vizsgaid and kurzustfelvesz.kurzusKod = kurzus.kurzuskod 
+group by kurzus.kurzusnev, vizsgazik.kapottjegy, kurzus.kurzusnev, evszam 
+order by kurzustfelvesz.evszam;
+
+--Lehet jobban járunk, ha simán lekérdezésekbe belerakjuk ezeket, mint az elsõ Django-s projektnél
+
+-- Kurzushoz valo teremkihasználtság, hogy mikor foglalt a terem
+
+
+
+
+select * from kurzus;
+select * from terem;
+
+
+
 
 
 
@@ -272,7 +306,6 @@ IF (:NEW.vizsgaalkalom) = 3 THEN
     UPDATE tartozas SET tartozasosszeg = tartozasosszeg + 1500 WHERE tartozas.hallgatoAzonosito = :NEW.hallgatoAzonosito;
     END IF;
 END;
-
 
 
 

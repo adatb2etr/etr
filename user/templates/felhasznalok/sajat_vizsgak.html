@@ -1,0 +1,40 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+{% if role == "hallgato" %}
+    <H1>Felvett vizsgáim</H1>
+    <table class="table">
+        <thead>
+            <th>Vizsga kódja</th>
+            <th>Tantárgy neve</th>
+            <th>Érdemjegy</th>
+            <th>Teljesített</th>
+        </thead>
+        <tbody>
+            {% for instance, erdemjegy in felvettVizsgak %}
+            <tr>
+                <td> {{ instance.vizsgaID }}  </td>
+                <td> {{ instance.kurzusKod.kurzusnev }} </td>
+                <td>{% if erdemjegy > 0 %}
+                    {{ erdemjegy }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </td>
+                <td>{% if erdemjegy > 0 %}
+                    Igen
+                    {% else %}
+                    Nem
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+
+
+{% endblock %}

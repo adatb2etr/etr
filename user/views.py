@@ -5,6 +5,8 @@ from user.forms import FelhasznaloForm, EtrAdminForm
 from user.models import EtrAdmin, Oktato, Hallgato
 from kurzus.models import Kurzus
 from kurzustfelvesz.models import Kurzustfelvesz
+from vizsga.models import Vizsga
+from vizsgatfelvesz.models import VizsgatFelvesz
 from user.forms import *
 from user.validators.validators import is_EtrAdmin, is_Hallgato, is_Oktato
 from django.contrib.auth.models import User
@@ -167,7 +169,7 @@ def sajat_kurzus_view(request):
         felvettKurzusokAzonosito = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("kurzusKod", flat=True))
         felvettKurzusokTeljesitette = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=user).values_list("teljesitette", flat=True))
         felvettKurzusok = Kurzus.objects.filter(kurzuskod__in=felvettKurzusokAzonosito)
-
+        
         felvettKurzusok = zip(felvettKurzusok, felvettKurzusokTeljesitette)
 
     else:
@@ -180,3 +182,35 @@ def sajat_kurzus_view(request):
         "felvettKurzusok": felvettKurzusok,
     }
     return render(request, "felhasznalok/sajat_kurzusok.html", context)
+
+def sajat_vizsga_view(request):
+    role = getRole(request.user)
+    felvettVizsgak = None
+    felvettVizsgakTeljesitette = None
+
+    if role == "admin":
+        user = EtrAdmin.objects.get(azonosito=request.user)
+        vizsgak = Vizsga.objects.all()
+    elif role == "oktato":
+        user = Oktato.objects.get(azonosito=request.user)
+        vizsgak = Vizsga.objects.filter(oktatoAzonosito=request.user)
+
+    elif role == "hallgato":
+        user = Hallgato.objects.get(azonosito=request.user)
+        vizsgak = Vizsga.objects.all()
+        felvettVizsgakAzonosito = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=user).values_list("vizsgaID", flat=True))
+        felvettVizsgakTeljesitette = list(VizsgatFelvesz.objects.filter(hallgatoAzonosito=user).values_list("erdemjegy", flat=True))
+        felvettVizsgak = Vizsga.objects.filter(vizsgaID__in=felvettVizsgakAzonosito)
+
+        felvettVizsgak = zip(felvettVizsgak, felvettVizsgakTeljesitette)
+
+    else:
+        return redirect("../teszt/")
+
+    context = {
+        "obj": user,
+        "role" : role,
+        "object_list": vizsgak,
+        "felvettVizsgak": felvettVizsgak,
+    }
+    return render(request, "felhasznalok/sajat_vizsgak.html", context)

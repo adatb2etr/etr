@@ -35,8 +35,10 @@
                 {% if role == "hallgato"%}
                 <a class="dropdown-item" href="{{ HTTP_HOST }}/me/">Adataim</a>
                 {% endif %}
-                <a class="dropdown-item" href="{{ HTTP_HOST }}/me/kurzusok">Kurzusok</a>
-                <a class="dropdown-item" href="{{ HTTP_HOST }}/vizsgak/">Vizsgák</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/me/kurzusok">Kurzusaim</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/kurzusok/">Kurzusfelvétel</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/me/vizsgak">Vizsgáim</a>
+                <a class="dropdown-item" href="{{ HTTP_HOST }}/vizsgak/">Vizsgafelvétel</a>
                 {% if role != "hallgato"%}
                 <a class="dropdown-item" href="{{ HTTP_HOST }}/termek/">Termek</a>
                 {% endif %}

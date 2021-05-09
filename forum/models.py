@@ -14,7 +14,7 @@ class Tema(models.Model):
 
 class OktatoUzenet(models.Model):
 
-    id = models.AutoField(primary_key=True, db_column="id", default=0)
+    id = models.AutoField(primary_key=True, db_column="id")
     uzenet = models.CharField(max_length=2000, null=False)
     datum = models.DateTimeField(null=False, auto_now_add=True)
     tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")
@@ -28,7 +28,7 @@ class OktatoUzenet(models.Model):
 
 class HallgatoUzenet(models.Model):
 
-    id = models.AutoField(primary_key=True, db_column="id", default=0)
+    id = models.AutoField(primary_key=True, db_column="id")
     uzenet = models.CharField(max_length=2000, null=False)
     datum = models.DateTimeField(null=False, auto_now_add=True)
     tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")

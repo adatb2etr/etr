@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Info(models.Model):
 
-    id = models.AutoField(primary_key=True, db_column="id", default=0)
+    id = models.AutoField(primary_key=True, db_column="id")
     cim = models.CharField(max_length=200, null=False)
     uzenet = models.CharField(max_length=50, null=False)
     

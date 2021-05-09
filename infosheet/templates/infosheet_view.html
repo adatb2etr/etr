@@ -15,8 +15,11 @@
             {% endfor %}
         </tbody>
     </table>
-    {% if role == "hallgato" %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary login-button">Küldés</button>
+    {% if role == "admin" %}
+    <form method="post", class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary login-button">Küldés</button>
+    </form>
     {% endif %}
 {% endblock %}

@@ -19,7 +19,7 @@
                 <td>{{ instance.tema }}</td>
                 <td>{{ instance.userId }}</td>                
                 <td>
-                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/add/">Hozzászólás</a></button></td>
+                    <!--<button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/add/">Hozzászólás</a></button></td>-->
                 <td>{% if instance.userId == user %}
                     <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/edit/">Szerkesztés</a></button>
                     {% endif %}
@@ -39,7 +39,8 @@
             <h1 class="title">Hozzászólás</h1>
             {% csrf_token %}
             <div class="row jutify-content-center" id="login-card">
-                {{ form.as_p }}
+                {{ form.uzenet }}
+                {{ form.tema }}
                 <button type="submit" class="btn btn-primary login-button">Küldés</button>
             </div>
         </form>

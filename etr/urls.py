@@ -33,6 +33,14 @@ from befizetes.views import *
 from forum.views import *
 from infosheet.views import *
 from uzenofal.views import *
+from tartozas.views import *
+from osztondij.views import *
+from vizsga.views import *
+from vizsgazik.views import *
+from kepzes.views import *
+from felvette.views import *
+from teljesitesfeltetel.views import *
+from befizetes.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -48,6 +56,7 @@ urlpatterns = [
     path('felhasznalok/<str:UserAzonosito>/delete/', felhasznalok_delete_view, name="FelhasznaloDeleteView"),
     path('me/', sajat_detail_view, name="Me"),
     path('me/kurzusok', sajat_kurzus_view, name="Kurzusaim"),
+    path('me/vizsgak', sajat_vizsga_view, name="Vizsgaim"),
 
     path('forum/', sajat_forum_view, name="Forum"),
     path('forum/<str:id>/edit/', forum_edit_view, name='forum-edit'),
@@ -70,9 +79,16 @@ urlpatterns = [
     path('kurzusok/<str:kurzus_kod>/add/', kurzus_add_view, name='kurzus-add'),
     path('kurzusok/<str:kurzus_kod>/update/', kurzus_update_view, name='kurzus-update'),
     path('kurzusok/<str:kurzus_kod>/delete/', kurzus_delete_view, name='kurzus-delete'),
-    path('kurzusok/<str:kurzus_kod>/denied/', kurzus_denied_view, name='kurzus-denied'),
+    path('kurzusok/<str:kurzus_kod>/disable/', kurzus_disable_view, name='kurzus-disable'),
     path('kurzusok/', kurzus_list_view, name='Kurzus lista'),
+    path('kurzusok/', kurzusKiosztas, name='Kurzus-kiosztas'),
 
+    path('kurzusokatfelvesz/create/', kurzustfelvesz_create_view, name='kurzustfelvesz-create'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/', kurzustfelvesz_lookup_view, name='kurzustfelvesz-detail'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/update/', kurzustfelvesz_update_view, name='kurzustfelvesz-update'),
+    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/delete/', kurzustfelvesz_delete_view, name='kurzustfelvesz-delete'),
+    path('kurzusokatfelvesz/', kurzustfelvesz_list_view, name='Kurzustfelvesz lista'),
+    
     path('elofeltetelek/create/', elofeltetel_create_view, name ='elofeltetel-create'),
     path('elofeltetelek/<str:elofeltetel_id>/', elofeltetel_lookup_view, name='elofeltetel-detail'),
     path('elofeltetelek/<str:elofeltetel_id>/update/', elofeltetel_update_view, name='elofeltetel-update'),
@@ -84,12 +100,6 @@ urlpatterns = [
     path('idopontok/<int:idopont_id>/update/', idopont_update_view, name='idopont-update'),
     path('idopontok/<int:idopont_id>/delete/', idopont_delete_view, name='idopont-delete'),
     path('idopontok/', idopont_list_view, name='Idopont lista'),
-
-    path('kurzusokatfelvesz/create/', kurzustfelvesz_create_view, name='kurzustfelvesz-create'),
-    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/', kurzustfelvesz_lookup_view, name='kurzustfelvesz-detail'),
-    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/update/', kurzustfelvesz_update_view, name='kurzustfelvesz-update'),
-    path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/delete/', kurzustfelvesz_delete_view, name='kurzustfelvesz-delete'),
-    path('kurzusokatfelvesz/', kurzustfelvesz_list_view, name='Kurzustfelvesz lista'),
 
     path('tartozasok/create/', tartozas_create_view, name='tartozas-create'),
     path('tartozasok/<str:hallgatoAzonosito>/', tartozas_lookup_view, name='tartozas-detail'),
@@ -105,6 +115,7 @@ urlpatterns = [
 
     path('vizsgak/create/', vizsga_create_view, name='vizsga-create'),
     path('vizsgak/<int:vizsgaID>/', vizsga_lookup_view, name='vizsga-detail'),
+    path('vizsgak/<str:vizsgaID>/add/', vizsga_add_view, name='vizsga-add'),
     path('vizsgak/<int:vizsgaID>/update/', vizsga_update_view, name='vizsga-update'),
     path('vizsgak/<int:vizsgaID>/delete/', vizsga_delete_view, name='vizsga-delete'),
     path('vizsgak/', vizsga_list_view, name='Vizsga lista'),
@@ -138,5 +149,9 @@ urlpatterns = [
     path('befizetesek/<int:befizetesID>/update/', befizetes_update_view, name='befizetes-update'),
     path('befizetesek/<int:befizetesID>/delete/', befizetes_delete_view, name='befizetes-delete'),
     path('befizetesek/', befizetes_list_view, name='Befizetes lista'),
+
+
+    path('idopontok/charts', TeremKihasznaltsagStat.as_view(), name="TeremkihasznaltsagStat"),
+    path('vizsgak/charts', VizsgaStatChartView.as_view(), name="VizsgaStatChartView"),
 
 ]

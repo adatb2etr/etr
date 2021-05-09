@@ -15,6 +15,7 @@ from django.contrib.auth.forms import UserCreationForm
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from .models import Info
 from .forms import InfosheetForm
+import operator
 
 # Create your views here.
 # /me/infosheet
@@ -24,7 +25,7 @@ def infosheet_view(request):
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
         try:
-            queryset = Info.objects.all()
+            queryset = Info.objects.order_by('-id')
         except Info.DoesNotExist:
             queryset = [Info("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = InfosheetForm(request.POST or None)
@@ -41,7 +42,7 @@ def infosheet_view(request):
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
         try:
-            queryset = Info.objects.all()
+            queryset = Info.objects.order_by('-id')
         except Info.DoesNotExist:
             queryset = [Info("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = InfosheetForm(request.POST or None)
@@ -58,7 +59,7 @@ def infosheet_view(request):
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
         try:
-            queryset = Info.objects.all()
+            queryset = Info.objects.order_by('-id')
         except Info.DoesNotExist:
             queryset = [Info("Hiba!", "Sajnos nincsenek még bejegyzések")]
         form = InfosheetForm(request.POST or None)
