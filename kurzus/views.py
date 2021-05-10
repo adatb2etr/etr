@@ -8,6 +8,7 @@ from django.shortcuts import render
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from user.validators.validators import is_Oktato, is_EtrAdmin, is_Hallgato
 import random
+from kurzustfelvesz.views import get_teljesitett_elofeltetelek
 
 def kurzus_create_view(request):
     role = getRole(request.user)
@@ -86,10 +87,11 @@ def kurzus_add_view(request, kurzus_kod):
     queryset = Kurzus.objects.all()  #list of objects
     role = getRole(request.user)
     user = request.user
-    print(user)
     if role == "hallgato":
+        hallgato = Hallgato.objects.get(azonosito=user)
         obj = get_object_or_404(Kurzus, kurzuskod=kurzus_kod)
-        Kurzustfelvesz(hallgatoAzonosito=Hallgato.objects.get(azonosito=user), kurzusKod=obj, teljesitette=0, evszam=2021).save()
+        if get_teljesitett_elofeltetelek(obj, hallgato):
+            Kurzustfelvesz(hallgatoAzonosito=Hallgato.objects.get(azonosito=user), kurzusKod=obj, teljesitette=0, evszam=2021).save()
         return redirect("../../../kurzusok/")
     context = {
         "object_list": queryset
