@@ -26,6 +26,9 @@ class OktatoUzenet(models.Model):
     def __str__(self):
         return str(self.uzenet + " (" + self.datum + ")")
 
+    def get_absolute_url(self):
+        return reverse("forum-detail", kwargs={'message_id': self.id})
+
 class HallgatoUzenet(models.Model):
 
     id = models.AutoField(primary_key=True, db_column="id")
@@ -41,4 +44,4 @@ class HallgatoUzenet(models.Model):
         return str(self.uzenet)
 
     def get_absolute_url(self):
-        return reverse("osztondij-detail", kwargs={'message_id': self.id})
+        return reverse("forum-detail", kwargs={'message_id': self.id})

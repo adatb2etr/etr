@@ -59,9 +59,9 @@ urlpatterns = [
     path('me/vizsgak', sajat_vizsga_view, name="Vizsgaim"),
 
     path('forum/', sajat_forum_view, name="Forum"),
-    path('forum/<str:id>/edit/', forum_edit_view, name='forum-edit'),
-    path('forum/<str:id>/delete/', forum_delete_view, name='forum-delete'),
-    #path('forum/<str:id>/answear/', sajat_forum_view, name='forum-answear'),
+    path('forum/<int:message_id>/', terem_lookup_view, name='forum-detail'),
+    path('forum/<int:message_id>/edit/', forum_edit_view, name='forum-edit'),
+    path('forum/<int:message_id>/delete/', forum_delete_view, name='forum-delete'),
 
     path('infosheet/', infosheet_view, name="Infosheet"),
 

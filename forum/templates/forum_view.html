@@ -21,11 +21,9 @@
                 <td>
                 <td>{% if instance.userId == user %}
                     <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/edit/">Szerkesztés</a></button>
-                    {% else %}
-                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/{{ instance.id }/answear/">Válasz</a></button>
                     {% endif %}
                     {% if  role  == "admin" or instance.userId == user %}
-                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/delete/">Törlés</a></button>
+                    <button type="button" class="btn btn-primary"><a href="{{ instance.get_absolute_url }}delete/">Törlés</a></button>
                     {% endif %}
                 </td>
             </tr>

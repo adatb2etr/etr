@@ -1,17 +1,7 @@
-from django.shortcuts import render
-from user.forms import EtrAdminForm, FelhasznaloForm, FelhasznaloLoginForm
+from django.shortcuts import render, get_object_or_404
 from user.models import EtrAdmin, Oktato, Hallgato
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-import hashlib
-from django.contrib.auth.hashers import make_password
 from user.validators.validators import is_EtrAdmin, is_Oktato, is_Hallgato
-from user.validators.queries import getids
 from django.shortcuts import redirect
-from tartozas.admin import Tartozas
-from osztondij.models import Osztondij
-import random, string
-from django.contrib.auth.forms import UserCreationForm
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from .models import Oktato, OktatoUzenet, Hallgato, HallgatoUzenet
 from itertools import chain
@@ -24,8 +14,8 @@ def sajat_forum_view(request):
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
         try:
-            queryset_o = OktatoUzenet.objects.order_by('-id')
-            queryset_h = HallgatoUzenet.objects.order_by('-id')
+            queryset_o = OktatoUzenet.objects.order_by('-id', 'tema')
+            queryset_h = HallgatoUzenet.objects.order_by('-id', 'tema')
             queryset = list(chain(queryset_h, queryset_o))
         except:
             queryset = []
@@ -48,8 +38,8 @@ def sajat_forum_view(request):
         return render(request, "forum_view.html", context)
     elif role == "oktato":
         user = Oktato.objects.get(azonosito=request.user)
-        queryset_o = OktatoUzenet.objects.order_by('-id')
-        queryset_h = HallgatoUzenet.objects.order_by('-id')
+        queryset_o = OktatoUzenet.objects.order_by('-id', 'tema')
+        queryset_h = HallgatoUzenet.objects.order_by('-id', 'tema')
         queryset = list(chain(queryset_h, queryset_o))
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
@@ -65,8 +55,8 @@ def sajat_forum_view(request):
         return render(request, "forum_view.html", context)
     elif role == "hallgato":
         user = Hallgato.objects.get(azonosito=request.user)
-        queryset_o = OktatoUzenet.objects.order_by('-id')
-        queryset_h = HallgatoUzenet.objects.order_by('-id')
+        queryset_o = OktatoUzenet.objects.order_by('-id', 'tema')
+        queryset_h = HallgatoUzenet.objects.order_by('-id', 'tema')
         queryset = list(chain(queryset_h, queryset_o))
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
@@ -104,21 +94,34 @@ def forum_edit_view(request):
     }
     return render(request, "forum_edit_view.html", context)
 
-    # /me/forum/delete
-def forum_delete_view(request):
-    print(request.user)
-    role = getRole(request.user)
-    if role == "admin":
-        user = EtrAdmin.objects.get(azonosito=request.user)
-    elif role == "oktato":
-        user = Oktato.objects.get(azonosito=request.user)
-    elif role == "hallgato":
-        user = Hallgato.objects.get(azonosito=request.user)
-    else:
-        return redirect("../teszt/")
+
+def forum_lookup_view(request, message_id):
+    try:
+        obj = get_object_or_404(HallgatoUzenet, id=message_id)
+    except:
+        try:
+            obj = get_object_or_404(OktatoUzenet, id=message_id)
+        except:
+            pass
 
     context = {
-        "obj": user,
-        "role" : role
+        "obj": obj
     }
-    return render(request, "forum_delete_view.html", context)
+    return render(request, "befizetes_detail.html", context)
+
+def forum_delete_view(request, message_id):
+    if is_EtrAdmin(request):
+        try:
+            obj = get_object_or_404(HallgatoUzenet, id=message_id)
+        except:
+            try:
+                obj = get_object_or_404(OktatoUzenet, id=message_id)
+            except:
+                pass
+        if request.method == "POST":
+            obj.delete()
+            return redirect("../../../forum/")
+        context = {
+            "obj": obj
+        }
+        return render(request, "befizetes_delete.html", context)

@@ -11,7 +11,6 @@ class HallgatoCommentForm(forms.ModelForm):
             'uzenet',
             'tema',
             'userId',
-            'valaszId',
         ]
 
 class TemaFelvitelForm(forms.ModelForm):
