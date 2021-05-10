@@ -19,12 +19,13 @@
                 <td>{{ instance.tema }}</td>
                 <td>{{ instance.userId }}</td>                
                 <td>
-                    <!--<button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/add/">Hozzászólás</a></button></td>-->
                 <td>{% if instance.userId == user %}
                     <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/edit/">Szerkesztés</a></button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/{{ instance.id }/answear/">Válasz</a></button>
                     {% endif %}
                     {% if  role  == "admin" or instance.userId == user %}
-                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }/delete/">Törlés</a></button>
+                    <button type="button" class="btn btn-primary"><a href="../forum/{{ instance.userId }}/delete/">Törlés</a></button>
                     {% endif %}
                 </td>
             </tr>
@@ -44,5 +45,15 @@
                 <button type="submit" class="btn btn-primary login-button">Küldés</button>
             </div>
         </form>
+        {% if role="admin" %}
+        <form method="POST", class="form-group">
+            <h1 class="title">Téma felvitele</h1>
+            {% csrf_token %}
+            <div class="row jutify-content-center" id="login-card">
+                {{ temaForm }}
+                <button type="submit" class="btn btn-primary login-button">Küldés</button>
+            </div>
+        </form>
+        {% endif %}
     </div>
 {% endblock %}

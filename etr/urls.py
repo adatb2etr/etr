@@ -61,6 +61,7 @@ urlpatterns = [
     path('forum/', sajat_forum_view, name="Forum"),
     path('forum/<str:id>/edit/', forum_edit_view, name='forum-edit'),
     path('forum/<str:id>/delete/', forum_delete_view, name='forum-delete'),
+    path('forum/<str:id>/<str:message_id>/answear/', sajat_forum_view, name='forum-answear'),
 
     path('infosheet/', infosheet_view, name="Infosheet"),
 

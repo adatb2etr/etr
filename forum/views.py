@@ -18,7 +18,7 @@ from itertools import chain
 from .forms import HallgatoCommentForm
 
 # /me/forum
-def sajat_forum_view(request):
+def sajat_forum_view(request, id, message_id):
     role = getRole(request.user)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
@@ -28,15 +28,21 @@ def sajat_forum_view(request):
             queryset = list(chain(queryset_h, queryset_o))
         except:
             queryset = []
+        temaForm = temaForm(request.POST or None)
+        if temaForm.is_valid():
+            temaForm.save()
+            temaForm = temaForm()
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
             form.userId = user
+            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {
             "obj": user,
             "object_list": queryset,
-            "form": form
+            "form": form,
+            "temaForm": temaForm,
         }
         return render(request, "forum_view.html", context)
     elif role == "oktato":
@@ -47,6 +53,7 @@ def sajat_forum_view(request):
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
             form.userId = user
+            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {
@@ -64,6 +71,7 @@ def sajat_forum_view(request):
         if form.is_valid():
             form = form.save(commit=False)
             form.userId = user
+            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {

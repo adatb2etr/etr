@@ -19,7 +19,7 @@ class OktatoUzenet(models.Model):
     datum = models.DateTimeField(null=False, auto_now_add=True)
     tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")
     userId = models.ForeignKey(Oktato, max_length=6, null=True, on_delete=models.CASCADE, db_column="oktatoAzonosito", blank=True)
-    
+
     class Meta:
         db_table = "oktatouzenet"
 
@@ -33,6 +33,7 @@ class HallgatoUzenet(models.Model):
     datum = models.DateTimeField(null=False, auto_now_add=True)
     tema = models.ForeignKey(Tema, blank=True, null=True, on_delete=models.CASCADE, db_column="tema")
     userId = models.ForeignKey(Hallgato, max_length=6, null=True, on_delete=models.CASCADE, db_column="hallgatoAzonosito", blank=True)
+    valaszId = models.ForeignKey('self', null=True, on_delete=models.CASCADE, db_column="id", blank=True)
     
     class Meta:
         db_table = "hallgatouzenet"

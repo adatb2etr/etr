@@ -1,5 +1,5 @@
 from django import forms
-from .models import HallgatoUzenet
+from .models import HallgatoUzenet, Tema
 
 class HallgatoCommentForm(forms.ModelForm):
 
@@ -11,4 +11,13 @@ class HallgatoCommentForm(forms.ModelForm):
             'uzenet',
             'tema',
             'userId',
+            'valaszId',
         ]
+
+class TemaFelvitelForm(forms.ModelForm):
+
+    nev = Tema.nev
+
+    class Meta:
+        model = Tema
+        fields = ['nev']
