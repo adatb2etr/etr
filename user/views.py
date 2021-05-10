@@ -135,6 +135,7 @@ def felhasznalok_delete_view(request, UserAzonosito):
 def sajat_detail_view(request):
     role = getRole(request.user)
     print(role)
+    kkiDict = dict()
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
     elif role == "oktato":
@@ -148,7 +149,6 @@ def sajat_detail_view(request):
         for x in vizsgak:
             evszamok.add(x.vizsgaID.idopont.year)
 
-        kkiDict = dict()
         for evszam in evszamok:
              kkiDict[evszam] = mean((list(Vizsgazik.objects.values_list('kapottjegy', flat=True).filter(kapottjegy__gt=1, hallgatoAzonosito=user, vizsgaID__idopont__year=evszam))))
 

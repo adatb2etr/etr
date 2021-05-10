@@ -15,10 +15,11 @@ from django.contrib.auth.forms import UserCreationForm
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from .models import Oktato, OktatoUzenet, Hallgato, HallgatoUzenet
 from itertools import chain
-from .forms import HallgatoCommentForm
+from .forms import HallgatoCommentForm, TemaFelvitelForm
 
 # /me/forum
-def sajat_forum_view(request, id, message_id):
+def sajat_forum_view(request):
+
     role = getRole(request.user)
     if role == "admin":
         user = EtrAdmin.objects.get(azonosito=request.user)
@@ -28,14 +29,13 @@ def sajat_forum_view(request, id, message_id):
             queryset = list(chain(queryset_h, queryset_o))
         except:
             queryset = []
-        temaForm = temaForm(request.POST or None)
+        temaForm = TemaFelvitelForm(request.POST or None)
         if temaForm.is_valid():
             temaForm.save()
-            temaForm = temaForm()
+            temaForm = TemaFelvitelForm()
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
             form.userId = user
-            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {
@@ -43,6 +43,7 @@ def sajat_forum_view(request, id, message_id):
             "object_list": queryset,
             "form": form,
             "temaForm": temaForm,
+            "role": role,
         }
         return render(request, "forum_view.html", context)
     elif role == "oktato":
@@ -53,13 +54,13 @@ def sajat_forum_view(request, id, message_id):
         form = HallgatoCommentForm(request.POST or None)
         if form.is_valid():
             form.userId = user
-            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {
             "obj": user,
             "object_list": queryset,
-            "form": form
+            "form": form,
+            "role": role,
         }
         return render(request, "forum_view.html", context)
     elif role == "hallgato":
@@ -71,23 +72,18 @@ def sajat_forum_view(request, id, message_id):
         if form.is_valid():
             form = form.save(commit=False)
             form.userId = user
-            form.valaszId = OktatoUzenet.objects.get(id=message_id) or Null
             form.save()
             form = HallgatoCommentForm()
         context = {
             "obj": user,
             "object_list": queryset,
-            "form": form
+            "form": form,
+            "role": role,
         }
         return render(request, "forum_view.html", context)
     else:
         return redirect("../teszt/")
 
-    context = {
-        "obj": user,
-        "role" : role
-    }
-    return render(request, "forum_view.html", context)
 
     # /me/forum/edit
 def forum_edit_view(request):
