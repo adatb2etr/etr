@@ -9,8 +9,9 @@ select * from kurzus;
 select * from auth_user;
 select * from kurzustfelvesz;
 
-
-
+drop table oktatouzenet;
+drop table hallgatouzenet;
+drop table tema;
 drop table kurzustfelvesz;
 drop table vizsgazik;
 drop table vizsga;
@@ -163,18 +164,17 @@ CREATE TABLE vizsga(
     CONSTRAINT vizsgaKurzusKod_fk FOREIGN KEY (kurzusKod) REFERENCES kurzus(kurzuskod) ON DELETE CASCADE
 );
 
-truncate table vizsgazik;
 CREATE TABLE vizsgazik(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
     vizsgaID NUMBER not null,
     hallgatoAzonosito VARCHAR(6) not null,
-    kapottjegy INT not null check (kapottjegy between 1 and 5),
+    kapottjegy INT not null check (kapottjegy between 0 and 5),
     vizsgaalkalom INT default 0 not null check (vizsgaalkalom between 0 and 3),
     CONSTRAINT vizsgaID_fk FOREIGN KEY (vizsgaID) REFERENCES vizsga(vizsgaID) ON DELETE CASCADE,
     CONSTRAINT vizsgaHallgatoAzonostio_pk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
 );
 
-
+select * from vizsgazik where hallgatoAzonosito = 'N182OR';
 
 CREATE TABLE kurzustfelvesz(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
@@ -199,6 +199,7 @@ CREATE table oktatouzenet(
     datum TIMESTAMP not null,
     tema VARCHAR(200),
     oktatoAzonosito VARCHAR(6),
+    CONSTRAINT oktatoUzenet_pk PRIMARY KEY (id),
     CONSTRAINT oktatoTema_fk FOREIGN KEY (tema) REFERENCES tema(nev) ON DELETE CASCADE,
     CONSTRAINT oktatoUzenetAzonosito_fk FOREIGN KEY (oktatoAzonosito) REFERENCES oktato(azonosito) ON DELETE CASCADE
 );
@@ -209,10 +210,13 @@ CREATE table hallgatouzenet(
     datum TIMESTAMP not null,
     tema VARCHAR(200),
     hallgatoAzonosito VARCHAR(6),
+    CONSTRAINT hallgatoUzenet_pk PRIMARY KEY (id),
     CONSTRAINT hallgatoTema_fk FOREIGN KEY (tema) REFERENCES tema(nev) ON DELETE CASCADE,
     CONSTRAINT hallgatoUzenetAzonosito_fk FOREIGN KEY (hallgatoAzonosito) REFERENCES hallgato(azonosito) ON DELETE CASCADE
 );
 
+select * from kurzus;
+drop table hallgatouzenet;
 
 create table infosheet(
     id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
@@ -243,8 +247,6 @@ END;
 --- GROUPPOLJA HOGY MELYIK ÉVBE MELYIK TANTÁRGYAT HANYAN VETTÉK FEL
 
 SELECT count(kurzustfelvesz.hallgatoAzonosito), kurzus.kurzuskod, evszam from kurzustfelvesz, kurzus where kurzustfelvesz.kurzusKod = kurzus.kurzuskod group by kurzus.kurzuskod, evszam;
-
-
 
 
 
@@ -293,7 +295,7 @@ INSERT INTO tartozas VALUES(:NEW.azonosito, 0);
 END;
 
 
-
+select * from hallgato where keresztnev = 'hallgato12'
 
 SET SERVEROUTPUT ON
 CREATE OR REPLACE TRIGGER tartozas_add
@@ -738,8 +740,6 @@ INSERT INTO felvette (hallgatoAzonosito, kepzesId, teljesitette) VALUES ('35ZUDS
 INSERT INTO felvette (hallgatoAzonosito, kepzesId, teljesitette) VALUES ('PVLXXR', 'SZTE-UZEM', 0);
 INSERT INTO felvette (hallgatoAzonosito, kepzesId, teljesitette) VALUES ('CEYRAH', 'SZTE-MERNOKINF', 0);
 INSERT INTO felvette (hallgatoAzonosito, kepzesId, teljesitette) VALUES ('GRBJJE', 'SZTE-UZEM', 0);
-
-
 
 --TERMEK--
 INSERT INTO terem VALUES ('2.emelet 204 Terem', 20);

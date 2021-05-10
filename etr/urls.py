@@ -81,8 +81,9 @@ urlpatterns = [
     path('kurzusok/<str:kurzus_kod>/update/', kurzus_update_view, name='kurzus-update'),
     path('kurzusok/<str:kurzus_kod>/delete/', kurzus_delete_view, name='kurzus-delete'),
     path('kurzusok/<str:kurzus_kod>/disable/', kurzus_disable_view, name='kurzus-disable'),
+    path('kurzusok/<str:kurzus_kod>/enable/', kurzus_enable_view, name='kurzus-enable'),
     path('kurzusok/', kurzus_list_view, name='Kurzus lista'),
-    path('kurzusok/', kurzusKiosztas, name='Kurzus-kiosztas'),
+    path('kurzusok/kiosztas/', kurzusKiosztas, name='Kurzus-kiosztas'),
 
     path('kurzusokatfelvesz/create/', kurzustfelvesz_create_view, name='kurzustfelvesz-create'),
     path('kurzusokatfelvesz/<int:kurzustfelvesz_id>/', kurzustfelvesz_lookup_view, name='kurzustfelvesz-detail'),

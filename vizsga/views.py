@@ -10,7 +10,7 @@ from django.shortcuts import render
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
 from vizsgazik.models import Vizsgazik
 from django.db import connection
-
+import datetime
 
 def vizsga_create_view(request):
 
@@ -63,7 +63,8 @@ def vizsga_delete_view(request, vizsgaID):
 
 
 def vizsga_list_view(request):
-    queryset = Vizsga.objects.all()  #list of objects
+    today = datetime.date.today() - datetime.timedelta(days=365)
+    queryset = Vizsga.objects.filter(idopont__gt=today)
     kodok = Vizsga.objects.all().values_list("vizsgaID", flat=True)
     felvettVizsgaAzonosito = list(Vizsgazik.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("vizsgaID", flat=True))
     felvettVizsgaTeljesitette = list(Vizsgazik.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("kapottjegy", flat=True))

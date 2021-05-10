@@ -41,18 +41,23 @@
                 </td>
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}">Részletek</a></button>
-                    {% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null  and not instance.kurzuskod in felvettkodok %}
+                    {% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null  and not instance.kurzuskod in felvettkodok and role != "oktato" %}
                     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}/add">Felvétel</a></button>
                     {% else %}
                     {% if instance.meghirdetett != 0 and instance.oktatoAzonosito != null  and instance.kurzuskod in felvettkodok %}
                     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled><a>Már felvéve</a></button>
                     {% else %}
+                        {% if role != "oktato" %}
                     <button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele" disabled><a>Nem lehetséges a felvétel</a></button>
+                            {% endif %}
                     {% endif %}
                     {% endif %}
                 </td>
-                {% if role == "oktato" and instance.meghirdetett != 0 and instance.oktatoAzonosito == azonosito %}
+                {% if role == "oktato" and instance.meghirdetett != 0 and instance.oktatoAzonosito.azonosito == azonosito.username %}
                 <td><button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}/disable">Letiltás</a></button></td>
+                {% endif %}
+                {% if role == "oktato" and instance.meghirdetett != 1 and instance.oktatoAzonosito.azonosito == azonosito.username %}
+                <td><button type="button" class="btn btn-primary btn-sm" id="kurzusfelvetele"><a href="../kurzusok/{{ instance.kurzuskod }}/enable">Engedélyezés</a></button></td>
                 {% endif %}
             </tr>
             {% endfor %}

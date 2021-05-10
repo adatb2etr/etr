@@ -2,11 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from .forms import KurzusForm
 from .models import Kurzus
 from kurzustfelvesz.models import Kurzustfelvesz
-from user.validators.validators import is_EtrAdmin
-from user.models import Hallgato
+from user.models import Hallgato, Oktato
 from django.shortcuts import redirect
 from django.shortcuts import render
 from user.validators.queries import getids, getRole, getEtrAdminIds, getHallgatoIds, getOktatoIds
+from user.validators.validators import is_Oktato, is_EtrAdmin, is_Hallgato
+import random
 
 def kurzus_create_view(request):
     role = getRole(request.user)
@@ -60,15 +61,18 @@ def kurzus_delete_view(request, kurzus_kod):
 
 def kurzus_list_view(request):
     role = getRole(request.user)
+
     queryset = Kurzus.objects.all()  #list of objects
-    kodok = Kurzus.objects.all().values_list("kurzuskod", flat=True)
-    felvettKurzusokAzonosito = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("kurzusKod", flat=True))
-    felvettKurzusokTeljesitette = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("teljesitette", flat=True))
-    felvettKurzusok = Kurzus.objects.filter(kurzuskod__in=felvettKurzusokAzonosito)
-    
-    felvettKurzusok = zip(felvettKurzusok, felvettKurzusokTeljesitette)
-    
-    felvett = Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user))
+    felvettKurzusokAzonosito = []
+    if role == "hallgato":
+        kodok = Kurzus.objects.all().values_list("kurzuskod", flat=True)
+        felvettKurzusokAzonosito = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("kurzusKod", flat=True))
+        felvettKurzusokTeljesitette = list(Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user)).values_list("teljesitette", flat=True))
+        felvettKurzusok = Kurzus.objects.filter(kurzuskod__in=felvettKurzusokAzonosito)
+
+        felvettKurzusok = zip(felvettKurzusok, felvettKurzusokTeljesitette)
+
+        felvett = Kurzustfelvesz.objects.filter(hallgatoAzonosito=Hallgato.objects.get(azonosito=request.user))
 
     context = {
         "object_list": queryset,
@@ -94,14 +98,28 @@ def kurzus_add_view(request, kurzus_kod):
 
 def kurzus_disable_view(request, kurzus_kod):
     if is_Oktato(request):
-        obj = get_object_or_404(Kurzus, kurzuskod=kurzus_kod)
-        if request.method == "POST":
-            obj.update(meghirdetett=0)
+        obj = Kurzus.objects.get(kurzuskod=kurzus_kod)
+        if request.method == "GET":
+            obj.meghirdetett = 0
+            obj.save()
             return redirect("../../../kurzusok/")
         context = {
             "obj": obj
         }
         return redirect("../../../kurzusok/")
+
+def kurzus_enable_view(request, kurzus_kod):
+    if is_Oktato(request):
+        obj = Kurzus.objects.get(kurzuskod=kurzus_kod)
+        if request.method == "GET":
+            obj.meghirdetett = 1
+            obj.save()
+            return redirect("../../../kurzusok/")
+        context = {
+            "obj": obj
+        }
+        return redirect("../../../kurzusok/")
+
 
 def kurzusKiosztas():
     osszesKurzus = list(Kurzus.objects.values_list('kurzuskod', flat=True).filter(meghirdetett=0, oktatoAzonosito=None))
@@ -117,4 +135,4 @@ def kurzusKiosztas():
             kurzus.oktatoAzonosito = kurzushozOktato
             kurzus.save()
         except:
-            break
+            return redirect("../../../kurzusok/")
